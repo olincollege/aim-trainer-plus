@@ -10,3 +10,6 @@ pygame.init()
 def terminate():
     pygame.quit()
     sys.exit()
+
+def main():
+    window((WINDOWWIDTH, WINDOWHEIGHT))
