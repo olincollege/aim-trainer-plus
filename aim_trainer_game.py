@@ -14,15 +14,6 @@ def main():
     view = AimTrainerView(range)
     controller = AimTrainerController(range)
 
-    pygame.init()
-
-    def terminate():
-        """
-        Closes Pygame
-        """
-        pygame.quit()
-        sys.exit()
-
     def Menu():
         """
         Prompts player for difficulty level
