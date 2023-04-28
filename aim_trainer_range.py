@@ -43,6 +43,8 @@ class AimTrainerRange:
     shootSound.set_volume(0.25)
     hitSound.set_volume(1)
 
+    targets = []
+
     def __init__(self):
         """
         Clock and score
@@ -78,3 +80,116 @@ class AimTrainerRange:
         )
         difficultyFile.close()
         return config
+
+    def game(difficulty):
+        config = populateConfig(difficulty)
+
+        pygame.mouse.set_visible(False)
+
+        mouseY = round(WINDOWHEIGHT / 2)
+        mouseX = round(WINDOWWIDTH / 2)
+
+        tickCounter = 0
+        enemies = []
+        amountOfEnemies = 0
+        score = 0
+        FPS = 75
+        hitShots = 0
+        totalShots = 0
+        STARTINGTIME = config.get("time")
+        CIRCLERADIUS = 150
+        while True:
+            if config.get("time") <= 0:
+                gameOver(totalShots, hitShots, difficulty, score)
+            tickCounter += 1
+            if tickCounter % FPS == 0:
+                config["time"] -= 1
+            self.windowSurface.fill(COLORS["WHITE"])
+
+            if amountOfEnemies == 0:
+                config["time"] = STARTINGTIME
+                while amountOfEnemies != config.get("maxAmountOfEnemies"):
+                    enemies.append(
+                        pygame.Rect(
+                            (
+                                random.randint(
+                                    0, WINDOWWIDTH - config.get("enemySize")
+                                )
+                            ),
+                            (
+                                random.randint(
+                                    0, WINDOWHEIGHT - config.get("enemySize")
+                                )
+                            ),
+                            config.get("enemySize"),
+                            config.get("enemySize"),
+                        )
+                    )
+                    if (
+                        enemies[amountOfEnemies].topleft[0] < 135
+                        and enemies[amountOfEnemies].topleft[1] < 65
+                    ):
+                        enemies.pop(amountOfEnemies)
+                    else:
+                        amountOfEnemies += 1
+            for event in pygame.event.get():
+                if event.type == QUIT:
+                    terminate()
+                if event.type == KEYDOWN:
+                    pass
+                if event.type == KEYUP:
+                    if event.key == K_ESCAPE:
+                        terminate()
+                if event.type == MOUSEMOTION:
+                    mouseX = event.pos[0]
+                    mouseY = event.pos[1]
+                if event.type == MOUSEBUTTONDOWN:
+                    pygame.mixer.Channel(0).play(shootSound)
+                    totalShots += 1
+                    for enemy in enemies[:]:
+                        if (
+                            mouseX > enemy.topleft[0]
+                            and mouseX < enemy.bottomright[0]
+                            and mouseY > enemy.topleft[1]
+                            and mouseY < enemy.bottomright[1]
+                        ):
+                            pygame.mixer.Channel(1).play(hitSound)
+                            enemies.remove(enemy)
+                            amountOfEnemies -= 1
+                            score += 1
+                            hitShots += 1
+
+            pygame.draw.circle(
+                windowSurface,
+                COLORS["WHITE"],
+                (mouseX, mouseY),
+                CIRCLERADIUS,
+                0,
+            )
+            for enemy in enemies:
+                windowSurface.blit(targetImage, enemy)
+            pygame.draw.circle(
+                windowSurface,
+                COLORS["BLACK"],
+                (mouseX, mouseY),
+                CIRCLERADIUS + 1,
+                3,
+            )
+            pygame.draw.line(
+                windowSurface,
+                self.COLORS["BLACK"],
+                (mouseX, mouseY + 150),
+                (mouseX, mouseY - 150),
+                2,
+            )
+            pygame.draw.line(
+                windowSurface,
+                self.COLORS["BLACK"],
+                (mouseX + 150, mouseY),
+                (mouseX - 150, mouseY),
+                2,
+            )
+            drawText("Time: " + str(config.get("time")), windowSurface, 8, 8)
+            drawText("Score: " + str(score), windowSurface, 8, 38)
+            pygame.display.update()
+            mainClock.tick(FPS)

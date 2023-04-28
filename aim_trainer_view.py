@@ -38,21 +38,21 @@ class AimTrainerView:
             accuracy = round(hitShots / totalShots * 100)
         else:
             accuracy = 0
-        range.windowSurface.fill(BLACK)
-        view.drawText(
+        range.windowSurface.fill(COLORS['BLACK'])
+        drawText(
             "GAME OVER",
             range.windowSurface,
             200,
             325,
             pygame.font.SysFont(None, 72, True),
         )
-        view.drawText(
+        drawText(
             "Click anywhere to restart", range.windowSurface, 170, 380
         )
-        view.drawText(
+        drawText(
             "Accuracy: " + str(accuracy) + "%", range.windowSurface, 269, 414
         )
-        view.drawText("Score: " + str(score), range.windowSurface, 308, 450)
+        drawText("Score: " + str(score), range.windowSurface, 308, 450)
         pygame.display.update()
         while True:
             for event in pygame.event.get():
