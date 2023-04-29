@@ -34,10 +34,13 @@ class AimTrainerView:
         Presents player with end of games stats and prompts for new game
         """
         pygame.mouse.set_visible(True)
+        #Calculate score
         if totalShots != 0 and hitShots != 0:
             accuracy = round(hitShots / totalShots * 100)
         else:
             accuracy = 0
+
+        #End of game prompt
         range.windowSurface.fill(COLORS['BLACK'])
         drawText(
             "GAME OVER",
@@ -46,15 +49,19 @@ class AimTrainerView:
             325,
             pygame.font.SysFont(None, 72, True),
         )
+        #Restart game prompt
         drawText(
             "Click anywhere to restart", range.windowSurface, 170, 380
         )
+        #Game stats prompt
         drawText(
             "Accuracy: " + str(accuracy) + "%", range.windowSurface, 269, 414
         )
         drawText("Score: " + str(score), range.windowSurface, 308, 450)
         pygame.display.update()
+
         while True:
+            #check to see if player is trying to exit game
             for event in pygame.event.get():
                 if event.type == QUIT:
                     terminate()

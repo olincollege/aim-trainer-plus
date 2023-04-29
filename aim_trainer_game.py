@@ -18,21 +18,28 @@ def main():
         """
         Prompts player for difficulty level
         """
+        # starting parameters
         timer = 0
         color = range.COLORS["BLUE"]
         switch = False
+
         while True:
+            # Generate boxes places for difficulty text to be placed
             range.windowSurface.fill(range.COLORS["BLACK"])
             difficultyRects = []
             difficultyRects.append(pygame.Rect(5, 450, 240, 100))
             difficultyRects.append(pygame.Rect(255, 450, 240, 100))
             difficultyRects.append(pygame.Rect(505, 450, 240, 100))
+
             for event in pygame.event.get():
+                # check to see if player wants to end game
                 if event.type == QUIT:
                     terminate()
                 if event.type == KEYDOWN:
                     if event.key == K_ESCAPE:
                         terminate()
+
+                ## Check to see what difficulty player chose
                 if event.type == MOUSEBUTTONDOWN:
                     if difficultyRects[0].collidepoint(pygame.mouse.get_pos()):
                         game("easy")
@@ -40,6 +47,8 @@ def main():
                         game("medium")
                     if difficultyRects[2].collidepoint(pygame.mouse.get_pos()):
                         game("hard")
+
+            # Display difficulties
             for rect in difficultyRects:
                 pygame.draw.rect(range.windowSurface, range.RED, rect)
             view.drawText(
@@ -74,6 +83,7 @@ def main():
                 range.FONT,
                 range.COLORS["BLACK"],
             )
+            # Update color used based on time left
             mainClock.tick(50)
             timer += 1
             if timer % 100 == 0:

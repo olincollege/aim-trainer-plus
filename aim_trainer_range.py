@@ -97,7 +97,7 @@ class AimTrainerRange:
 
         pygame.mouse.set_visible(False)
 
-        # Area which targets will be placed
+        # Mouse position
         MOUSE_Y = round(WINDOW_HEIGHT / 2)
         MOUSE_X = round(WINDOW_WIDTH / 2)
 
@@ -111,23 +111,27 @@ class AimTrainerRange:
         total_shots = 0
         STARTING_TIME = config[0]
         CIRCLE_RADIUS = 150
+
         while True:
             # Monitor if game is over my watching time
             if config[0] <= 0:
                 # end game and display player stats
                 game_over(total_shots, hit_shots, difficulty, score)
             tick_counter += 1
+
             if tick_counter % FPS == 0:
                 # game still going subtract from time
                 config[0] -= 1
+
             # Player still has time, keep status white
             self.window_surface.fill(COLORS["WHITE"])
 
             # Detect that game hasnt started and sets initial parameters
             if amount_targets == 0:
                 config[0] = STARTING_TIME
+
                 while amount_targets != config[1]:
-                    # Saves target positions for use
+                    # Saves target positions randomly for use
                     targets.append(
                         pygame.Rect(
                             (random.randint(0, WINDOW_WIDTH - config[2])),
@@ -136,6 +140,7 @@ class AimTrainerRange:
                             config[2],
                         )
                     )
+                    # Check to see if target is in bound if is remove target from list and if not add to target counter
                     if (
                         targets[amount_targets].topleft[0] < 135
                         and targets[amount_targets].topleft[1] < 65
@@ -143,7 +148,10 @@ class AimTrainerRange:
                         targets.pop(amount_targets)
                     else:
                         amount_targets += 1
+
+            # Check for player input on game continuation status
             for event in pygame.event.get():
+                # Check to see if player wants game to end
                 if event.type == QUIT:
                     terminate()
                 if event.type == KEYDOWN:
@@ -151,13 +159,20 @@ class AimTrainerRange:
                 if event.type == KEYUP:
                     if event.key == K_ESCAPE:
                         terminate()
+
+                # return mouse position
                 if event.type == MOUSEMOTION:
                     MOUSE_X = event.pos[0]
                     MOUSE_Y = event.pos[1]
+
+                # When mouse is clicked...
                 if event.type == MOUSEBUTTONDOWN:
                     pygame.mixer.Channel(0).play(SHOOT_SOUND)
                     total_shots += 1
+
+                    # Check to see if mouse position overlaps with targets
                     for target in targets[:]:
+                        # if target hit play hit sound, remove target, and add to score
                         if (
                             MOUSE_X > target.topleft[0]
                             and MOUSE_X < target.bottomright[0]
@@ -170,6 +185,7 @@ class AimTrainerRange:
                             score += 1
                             hit_shots += 1
 
+            # Have white circle around cursor
             pygame.draw.circle(
                 window_surface,
                 COLORS["WHITE"],
@@ -200,6 +216,7 @@ class AimTrainerRange:
                 (MOUSE_X - 150, MOUSE_Y),
                 2,
             )
+            # dsiplay game status to player
             drawText("Time: " + str(config.get("time")), window_surface, 8, 8)
             drawText("Score: " + str(score), window_surface, 8, 38)
             pygame.display.update()
