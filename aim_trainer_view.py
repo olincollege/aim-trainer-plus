@@ -21,11 +21,21 @@ class AimTrainerView:
         self._status = status
 
     def draw_text(
-        self, text, surface, x, y, font=FONT, color=self._status.COLORS["RED"]
+        self,
+        text,
+        surface,
+        x,
+        y,
+        font=None,
+        color=None,
     ):
         """
         Prints intractable text for user
         """
+        if font is None:
+            font = self.FONT
+        if color is None:
+            color = self._status.COLORS["RED"]
         # Load text
         text_object = font.render(text, 1, color)
         # get area of text
@@ -105,7 +115,6 @@ class AimTrainerView:
                 90,
                 150,
                 pygame.font.SysFont(None, 112),
-                color,
             )
             self.draw_text(
                 "Easy",

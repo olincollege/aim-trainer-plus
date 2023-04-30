@@ -8,13 +8,12 @@ from pygame.locals import *
 class AimTrainerController:
     """ """
 
-    # Mouse position
-    MOUSE_Y = round(self._status.WINDOW_HEIGHT / 2)
-    MOUSE_X = round(self._status.WINDOW_WIDTH / 2)
-
     def __init__(self, status):
         """ """
         self._status = status
+        # Mouse position
+        self._MOUSE_Y = round(self._status.WINDOW_HEIGHT / 2)
+        self._MOUSE_X = round(self._status.WINDOW_WIDTH / 2)
 
     def end_screen_check(self):
         """ """
@@ -22,7 +21,6 @@ class AimTrainerController:
         if pygame.event.type == QUIT:
             self._status.terminate()
         if pygame.event.type == MOUSEBUTTONDOWN:
-            range.window_surface.fill(self._status.COLORS["WHITE"])
             return True
         if pygame.event.type == KEYDOWN:
             self._status.terminate()
@@ -50,10 +48,10 @@ class AimTrainerController:
         for target in self._status.targets[:]:
             # if target hit play hit sound, remove target, and add to score
             if (
-                self.MOUSE_X > target.topleft[0]
-                and self.MOUSE_X < target.bottomright[0]
-                and self.MOUSE_Y > target.topleft[1]
-                and self.MOUSE_Y < target.bottomright[1]
+                self._MOUSE_X > target.topleft[0]
+                and self._MOUSE_X < target.bottomright[0]
+                and self._MOUSE_Y > target.topleft[1]
+                and self._MOUSE_Y < target.bottomright[1]
             ):
                 self._status.targets.remove(target)
                 amount_targets -= 1

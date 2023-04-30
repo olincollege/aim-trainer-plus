@@ -12,12 +12,16 @@ def main():
     view = AimTrainerView(range)
     controller = AimTrainerController(range)
 
+    # Start screen
     start = False
     while start == False:
         controller.exit_program
         view.start_screen
-        controller.choose_difficulty
+        range.populate_config(controller.choose_difficulty)
+        if range.config == []:
+            start = True
 
+    # game
     while start == True:
         controller.exit_program
         view.game_background
@@ -26,6 +30,7 @@ def main():
         controller.check_target_hit
         start = range.time_actions
 
+    # end screen
     view.endgame_screen
     if controller.end_screen_check:
         main()

@@ -44,7 +44,7 @@ class AimTrainerRange:
     def __init__(self):
         """ """
         # Game variables
-        self._config = self.populate_config(difficulty)
+        self._config = []
         self._tick_counter = 0
         self._targets = []
         self._amount_targets = 0
