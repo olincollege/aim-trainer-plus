@@ -8,39 +8,41 @@ from pygame.locals import *
 class AimTrainerController:
     """ """
 
-    for event in pygame.event.get():
-        # Check to see if plauer wants to end game
-        if event.type == QUIT:
-            terminate()
-        if event.type == KEYDOWN:
-            if event.key == K_ESCAPE:
+    def end_screen_check(self):
+        """ """
+        # check to see if player is trying to exit game
+        for event in pygame.event.get():
+            if event.type == QUIT:
+                terminate()
+            if event.type == MOUSEBUTTONDOWN:
+                range.window_surface.fill(COLORS[WHITE])
+                Menu()
+            if event.type == KEYDOWN:
                 terminate()
 
+    def choose_difficulty(self):
+        """ """
         # Check to see what difficulty player chose
-        if event.type == MOUSEBUTTONDOWN:
-            if difficultyRects[0].collidepoint(pygame.mouse.get_pos()):
-                game("easy")
+        if pygame.event.type == MOUSEBUTTONDOWN:
+            if difficulty_rects[0].collidepoint(pygame.mouse.get_pos()):
+                return "easy"
+            if difficulty_rects[1].collidepoint(pygame.mouse.get_pos()):
+                return "medium"
+            if difficulty_rects[2].collidepoint(pygame.mouse.get_pos()):
+                return "hard"
 
-            if difficultyRects[1].collidepoint(pygame.mouse.get_pos()):
-                game("medium")
-
-            if difficultyRects[2].collidepoint(pygame.mouse.get_pos()):
-                game("hard")
-
-        # Indicate chose made with box
-        for rect in difficultyRects:
-            pygame.draw.rect(windowSurface, RED, rect)
-
-        # Prompt user to pick difficulty
-        drawText(
-            "Pick a difficulty",
-            windowSurface,
-            90,
-            150,
-            pygame.font.SysFont(None, 112),
-            color,
-        )
-        # Display difficulties
-        drawText("Easy", windowSurface, 83, 485, FONT, BLACK)
-        drawText("Medium", windowSurface, 312, 485, FONT, BLACK)
-        drawText("Hard", windowSurface, 580, 485, FONT, BLACK)
+    def check_target_hit(self):
+        """ """
+        # Check to see if mouse position overlaps with targets
+        for target in targets[:]:
+            # if target hit play hit sound, remove target, and add to score
+            if (
+                MOUSE_X > target.topleft[0]
+                and MOUSE_X < target.bottomright[0]
+                and MOUSE_Y > target.topleft[1]
+                and MOUSE_Y < target.bottomright[1]
+            ):
+                targets.remove(target)
+                amount_targets -= 1
+                score += 1
+                hit_shots += 1
