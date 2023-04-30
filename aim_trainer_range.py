@@ -4,24 +4,6 @@ Window, colors, and targets and timer
 import pygame, random, sys, os
 from pygame.locals import *
 
-# Colors
-COLORS = {
-    "BLACK": (0, 0, 0),
-    "WHITE": (255, 255, 255),
-    "RED": (255, 0, 0),
-    "BLUE": (0, 0, 255),
-}
-
-# Window Size
-WINDOW_HEIGHT = 750
-WINDOW_WIDTH = 750
-
-# Bounds for window
-window_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
-
-# time
-main_clock = pygame.time.Clock()
-
 
 class AimTrainerRange:
     """
@@ -41,6 +23,24 @@ class AimTrainerRange:
 
     """
 
+    # Colors
+    COLORS = {
+        "BLACK": (0, 0, 0),
+        "WHITE": (255, 255, 255),
+        "RED": (255, 0, 0),
+        "BLUE": (0, 0, 255),
+    }
+
+    # Window Size
+    WINDOW_HEIGHT = 750
+    WINDOW_WIDTH = 750
+
+    # Bounds for window
+    window_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
+
+    # time
+    main_clock = pygame.time.Clock()
+
     def __init__(self):
         """ """
         # Game variables
@@ -56,15 +56,13 @@ class AimTrainerRange:
         self.CIRCLE_RADIUS = 150
 
     def config(self):
-        """
-        """
+        """ """
         return self._config
 
     def targets(self):
-        """
-        """
+        """ """
         return self._targets
-    
+
     def score(self):
         """
         Return score of player
@@ -73,6 +71,19 @@ class AimTrainerRange:
             a int being the score
         """
         return self._score
+
+    def terminate():
+        """ """
+        pygame.quit()
+        sys.exit()
+
+    def difficulty_boxes(self):
+        """ """
+        difficulty_rects = []
+        difficulty_rects.append(pygame.Rect(5, 450, 240, 100))
+        difficulty_rects.append(pygame.Rect(255, 450, 240, 100))
+        difficulty_rects.append(pygame.Rect(505, 450, 240, 100))
+        return difficulty_rects
 
     def populate_config(self, difficulty):
         """
@@ -98,10 +109,9 @@ class AimTrainerRange:
         elif difficulty == "hard":
             config = DIFFICULTY_SETTINGS["hard"]
         return config
-    
+
     def resize_target(self):
-        """
-        """
+        """ """
         # Takes imported image
         target_image = pygame.image.load("target.png")
         # Scale image according to config
@@ -130,12 +140,13 @@ class AimTrainerRange:
         # Monitor if game is over my watching time
         if self._config[0] <= 0:
             # end game and display player stats
-            return game_over(self._total_shots, self._hit_shots, self._score)
+            return False
         self.tick_counter += 1
 
         if self._tick_counter % self.FPS == 0:
             # game still going subtract from time
             self._config[0] -= 1
+        return True
 
     def accuracy(self):
         """

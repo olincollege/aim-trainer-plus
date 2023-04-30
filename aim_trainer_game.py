@@ -1,96 +1,35 @@
 """
 Run and stop trainer
 """
-import pygame, random, sys, os
-from pygame.locals import *
-
 from aim_trainer_range import AimTrainerRange
 from aim_trainer_view import AimTrainerView
 from aim_trainer_controller import AimTrainerController
 
 
 def main():
-    range = AimTrainerRange()
+    """ """
+    range = AimTrainerRange
     view = AimTrainerView(range)
     controller = AimTrainerController(range)
 
-    def Menu():
-        """
-        Prompts player for difficulty level
-        """
-        # starting parameters
-        timer = 0
-        color = range.COLORS["BLUE"]
-        switch = False
+    start = False
+    while start == False:
+        controller.exit_program
+        view.start_screen
+        controller.choose_difficulty
 
-        while True:
-            # Generate boxes places for difficulty text to be placed
-            range.windowSurface.fill(range.COLORS["BLACK"])
-            difficultyRects = []
-            difficultyRects.append(pygame.Rect(5, 450, 240, 100))
-            difficultyRects.append(pygame.Rect(255, 450, 240, 100))
-            difficultyRects.append(pygame.Rect(505, 450, 240, 100))
+    while start == True:
+        controller.exit_program
+        view.game_background
+        view.game_status
+        view.display_targets
+        controller.check_target_hit
+        start = range.time_actions
 
-            for event in pygame.event.get():
-                # check to see if player wants to end game
-                if event.type == QUIT:
-                    terminate()
-                if event.type == KEYDOWN:
-                    if event.key == K_ESCAPE:
-                        terminate()
-
-                ## Check to see what difficulty player chose
-                if event.type == MOUSEBUTTONDOWN:
-                    if difficultyRects[0].collidepoint(pygame.mouse.get_pos()):
-                        game("easy")
-                    if difficultyRects[1].collidepoint(pygame.mouse.get_pos()):
-                        game("medium")
-                    if difficultyRects[2].collidepoint(pygame.mouse.get_pos()):
-                        game("hard")
-
-            # Display difficulties
-            for rect in difficultyRects:
-                pygame.draw.rect(range.windowSurface, range.RED, rect)
-            view.drawText(
-                "Pick a difficulty",
-                range.windowSurface,
-                90,
-                150,
-                pygame.font.SysFont(None, 112),
-                color,
-            )
-            view.drawText(
-                "Easy",
-                range.windowSurface,
-                83,
-                485,
-                range.FONT,
-                range.COLORS["BLACK"],
-            )
-            view.drawText(
-                "Medium",
-                range.windowSurface,
-                312,
-                485,
-                range.FONT,
-                range.COLORS["BLACK"],
-            )
-            view.drawText(
-                "Hard",
-                range.windowSurface,
-                580,
-                485,
-                range.FONT,
-                range.COLORS["BLACK"],
-            )
-            # Update color used based on time left
-            mainClock.tick(50)
-            timer += 1
-            if timer % 100 == 0:
-                color = range.COLORS["BLUE"]
-            elif timer % 50 == 0:
-                color = range.COLORS["RED"]
-            pygame.display.update()
+    view.endgame_screen
+    if controller.end_screen_check:
+        main()
+    return
 
 
 if __name__ == "__main__":
