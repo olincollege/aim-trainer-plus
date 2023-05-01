@@ -1,5 +1,5 @@
 """
-Window, colors, and targets and timer
+Module for Aim Trainer
 """
 import pygame, random, sys, os
 from pygame.locals import *
@@ -7,19 +7,24 @@ from pygame.locals import *
 
 class AimTrainerRange:
     """
-    Target and Active Game Variables
+    aim trainer functions that handle data
 
     Attributes:
-        config
-        tick_counter
-        targets
-        amount_targets
-        score
-        FPS
-        hit_shots
-        total_shots
-        STARTING_TIME
-        CIRCLE_RADIUS
+        COLORS: a dict with a string key indicating a color mapped to a tuple of ints representing a RGBa code
+        WINDOW_HEIGHT: a int representing the amount of pixels wanted for height
+        WINDOW_WIDTH: a int representing the amount of pixels wanted for width
+        window_surface: a function that displays a window with given height and width
+        main_clock: an object that helps track time
+        _config: a list containing ints that determine game difficulty settings
+        _tick_counter: a int of the time gone by in milliseconds
+        _targets: a list containing cords for upcoming target spawn
+        _amount_targets: a int indicating the amount of valid targets in play
+        _score: a int indicating the score of the player
+        FPS: a int indicating the FPS the game is being played at
+        _hit_shots: a int indicating the amount of shots that hit a target
+        _total_shots: a int indicating the amount of shots taken
+        _MOUSE_Y: a int for the starting position of the mouse on y axis
+        _MOUSE_X: a int for the starting position of the mouse on the x axis
 
     """
 
@@ -32,8 +37,8 @@ class AimTrainerRange:
     }
 
     # Window Size
-    WINDOW_HEIGHT = 750
-    WINDOW_WIDTH = 750
+    WINDOW_HEIGHT = 768
+    WINDOW_WIDTH = 1366
 
     # Bounds for window
     window_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -42,7 +47,9 @@ class AimTrainerRange:
     main_clock = pygame.time.Clock()
 
     def __init__(self):
-        """ """
+        """
+        Sets starting variables
+        """
         # Game variables
         self._config = []
         self._tick_counter = 0
@@ -52,33 +59,59 @@ class AimTrainerRange:
         self.FPS = 75
         self._hit_shots = 0
         self._total_shots = 0
-        # self._STARTING_TIME = self._config[0]
-        self.CIRCLE_RADIUS = 150
+        # Mouse position
+        self._MOUSE_Y = round(self.WINDOW_HEIGHT / 2)
+        self._MOUSE_X = round(self.WINDOW_WIDTH / 2)
 
     def config(self):
-        """ """
+        """
+        Returns:
+            a list of ints being difficulty settings
+        """
         return self._config
 
     def targets(self):
-        """ """
+        """
+        Returns:
+            targets: a list of ints being future target spawn cords
+        """
         return self._targets
 
     def score(self):
         """
-        Return score of player
-
         Returns:
             a int being the score
         """
         return self._score
+    
+    def MOUSE_Y(self):
+        """
+        Returns:
+            a int of the mouse y position
+        """
+        return self._MOUSE_Y
+    
+    def MOUSE_X(self):
+        """
+        Returns:
+            a int of the mouse x position
+        """
+        return self._MOUSE_X
 
     def terminate():
-        """ """
+        """
+        Ends Pygame
+        """
         pygame.quit()
         sys.exit()
 
     def difficulty_boxes(self):
-        """ """
+        """
+        Generates box placement cords for difficulty text to be placed on
+
+        Returns:
+            a list of tuples containing ints which are cords/dim for boxes
+        """
         difficulty_rects = []
         difficulty_rects.append(pygame.Rect(5, 450, 240, 100))
         difficulty_rects.append(pygame.Rect(255, 450, 240, 100))
@@ -87,13 +120,13 @@ class AimTrainerRange:
 
     def populate_config(self, difficulty):
         """
-        Resizes image based on difficulty selected. A harder difficulty generates a smaller image.
+        Determine which settings will be used for game based off difficulty selected
 
         Args:
             a string representing the difficulty
 
         Returns:
-            a pixel array of the resized target
+            a list containing ints that determine game difficulty settings
         """
         # Settings for difficulty. (time, amount of target, size of target)
         DIFFICULTY_SETTINGS = {
@@ -111,7 +144,12 @@ class AimTrainerRange:
         return self._config
 
     def resize_target(self):
-        """ """
+        """
+        Resize target based off difficulty settings
+
+        Returns:
+            a image of the target
+        """
         # Takes imported image
         target_image = pygame.image.load("target.png")
         # Scale image according to config
@@ -145,9 +183,30 @@ class AimTrainerRange:
         else:
             self._amount_targets += 1
 
+    def check_target_hit(self):
+        """
+        Check to see if mouse position is the same as a target. If so remove target from scree, subtract from amount of visible targets, add to score, and add to hit count
+        """
+        # Check to see if mouse position overlaps with targets
+        for target in self._targets[:]:
+            # if target hit play hit sound, remove target, and add to score
+            if (
+                self._MOUSE_X > target.topleft[0]
+                and self._MOUSE_X < target.bottomright[0]
+                and self._MOUSE_Y > target.topleft[1]
+                and self._MOUSE_Y < target.bottomright[1]
+            ):
+                self._targets.remove(target)
+                self._amount_targets -= 1
+                self._score += 1
+                self._hit_shots += 1
+
     def time_actions(self):
         """
-        Check time to see whether time is up or not. If times up, play game over function. If not subtract time from clock
+        Check time to see whether time is up or not. If times up, return False. If not subtract time from clock and return True
+
+        Returns:
+            a boolean determining if the game should continue or not
         """
         # Monitor if game is over my watching time
         if self._config[0] <= 0:

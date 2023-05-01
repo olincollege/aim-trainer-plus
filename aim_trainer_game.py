@@ -1,5 +1,5 @@
 """
-Run and stop trainer
+Compiles aim trainer mvc files.
 """
 import pygame, random, sys, os
 from pygame.locals import *
@@ -10,7 +10,9 @@ from aim_trainer_controller import AimTrainerController
 
 
 def main():
-    """ """
+    """ 
+    Runs aim trainer
+    """
     pygame.init()
 
     range = AimTrainerRange()
@@ -23,7 +25,7 @@ def main():
         controller.exit_program()
         view.start_screen()
         range.populate_config(controller.choose_difficulty())
-        if range.config != []:
+        if range.config() != []:
             start = True
         pygame.display.update()
 
@@ -35,15 +37,18 @@ def main():
         range.generate_targets()
         range.check_valid_target()
         view.display_targets()
-        controller.check_target_hit()
+        controller.mouse_pos()
+        range.check_target_hit()
         start = range.time_actions()
         pygame.display.update()
 
     # end screen
-    view.endgame_screen
-    if controller.end_screen_check():
-        main()
-    pygame.display.update()
+        while start == False:
+            controller.exit_program()
+            view.endgame_screen
+            if controller.end_screen_check():
+                main()
+            pygame.display.update()
 
 
 if __name__ == "__main__":

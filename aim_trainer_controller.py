@@ -1,36 +1,46 @@
 """
-aim trainer controller
+Controller for Aim Trainer
 """
 import pygame, random, sys, os
 from pygame.locals import *
 
 
 class AimTrainerController:
-    """ """
+    """
+    Tracks and takes user input
+
+    Attributes:
+        _status: a instance
+    """
 
     pygame.init()
 
     def __init__(self, status):
-        """ """
+        """
+        Saves instance
+        """
         self._status = status
-        # Mouse position
-        self._MOUSE_Y = round(self._status.WINDOW_HEIGHT / 2)
-        self._MOUSE_X = round(self._status.WINDOW_WIDTH / 2)
 
     def end_screen_check(self):
-        """ """
+        """
+        Checks to see if user wants to start another game by clicking on the screen
+
+        Returns:
+            a boolean dependent on choice
+        """
         # check to see if player is trying to exit game
-        if pygame.event == QUIT:
-            self._status.terminate()
-        if pygame.event == MOUSEBUTTONDOWN:
+        if pygame.event.get == MOUSEBUTTONDOWN:
             return True
-        if pygame.event == KEYDOWN:
-            self._status.terminate()
 
     def choose_difficulty(self):
-        """ """
+        """
+        Takes player choice on difficulty by logging if player clicks on a position occupied by the difficulty text
+
+        Returns:
+            a string stating a difficulty
+        """
         # Check to see what difficulty player chose
-        if pygame.event == MOUSEBUTTONDOWN:
+        if pygame.event.get == MOUSEBUTTONDOWN:
             if self._status.difficulty_boxes[0].collidepoint(
                 pygame.mouse.get_pos()
             ):
@@ -43,27 +53,24 @@ class AimTrainerController:
                 pygame.mouse.get_pos()
             ):
                 return "hard"
+            
+        return None
 
-    def check_target_hit(self):
-        """ """
-        # Check to see if mouse position overlaps with targets
-        for target in self._status.targets[:]:
-            # if target hit play hit sound, remove target, and add to score
-            if (
-                self._MOUSE_X > target.topleft[0]
-                and self._MOUSE_X < target.bottomright[0]
-                and self._MOUSE_Y > target.topleft[1]
-                and self._MOUSE_Y < target.bottomright[1]
-            ):
-                self._status.targets.remove(target)
-                amount_targets -= 1
-                score += 1
-                hit_shots += 1
+    def mouse_pos(self):
+        """
+        Saves mouse position when mouse is clicked
+        """
+        if pygame.event.get == MOUSEMOTION:
+            self._status.MOUSE_X = pygame.mouse.get_pos[0]
+            self._status.MOUSE_Y = pygame.mouse.get_pos[1]
 
     def exit_program(self):
-        """ """
-        if pygame.event == QUIT:
-            self._status.terminate()
-        if pygame.event == KEYDOWN:
-            if pygame.event.key == K_ESCAPE:
+        """
+        Checks if player is trying to escape or close game window and then closes it
+        """
+        for event in pygame.event.get():
+            if event.type == QUIT:
                 self._status.terminate()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    self._status.terminate()
