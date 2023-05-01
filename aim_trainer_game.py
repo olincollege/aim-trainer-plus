@@ -32,6 +32,8 @@ def main():
         controller.exit_program()
         view.game_background()
         view.game_status()
+        range.generate_targets()
+        range.check_valid_target()
         view.display_targets()
         controller.check_target_hit()
         start = range.time_actions()

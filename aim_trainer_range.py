@@ -133,6 +133,18 @@ class AimTrainerRange:
             )
         )
 
+    def check_valid_target(self):
+        """
+        Check to see if target is in bound if is remove target from list and if not add to target counter
+        """
+        if (
+            self._targets[self._amount_targets].topleft[0] < 135
+            and self._targets[self._amount_targets].topleft[1] < 65
+        ):
+            self._targets.pop(self._amount_targets)
+        else:
+            self._amount_targets += 1
+
     def time_actions(self):
         """
         Check time to see whether time is up or not. If times up, play game over function. If not subtract time from clock
