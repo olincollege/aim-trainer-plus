@@ -52,7 +52,7 @@ class AimTrainerRange:
         self.FPS = 75
         self._hit_shots = 0
         self._total_shots = 0
-        self._STARTING_TIME = self._config[0]
+        # self._STARTING_TIME = self._config[0]
         self.CIRCLE_RADIUS = 150
 
     def config(self):
@@ -103,12 +103,12 @@ class AimTrainerRange:
         }
         # Saves settings to config per difficulty
         if difficulty == "easy":
-            config = DIFFICULTY_SETTINGS["easy"]
+            self._config = DIFFICULTY_SETTINGS["easy"]
         elif difficulty == "medium":
-            config = DIFFICULTY_SETTINGS["medium"]
+            self._config = DIFFICULTY_SETTINGS["medium"]
         elif difficulty == "hard":
-            config = DIFFICULTY_SETTINGS["hard"]
-        return config
+            self._config = DIFFICULTY_SETTINGS["hard"]
+        return self._config
 
     def resize_target(self):
         """ """

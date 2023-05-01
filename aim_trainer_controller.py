@@ -8,6 +8,8 @@ from pygame.locals import *
 class AimTrainerController:
     """ """
 
+    pygame.init()
+
     def __init__(self, status):
         """ """
         self._status = status
@@ -18,17 +20,17 @@ class AimTrainerController:
     def end_screen_check(self):
         """ """
         # check to see if player is trying to exit game
-        if pygame.event.type == QUIT:
+        if pygame.event == QUIT:
             self._status.terminate()
-        if pygame.event.type == MOUSEBUTTONDOWN:
+        if pygame.event == MOUSEBUTTONDOWN:
             return True
-        if pygame.event.type == KEYDOWN:
+        if pygame.event == KEYDOWN:
             self._status.terminate()
 
     def choose_difficulty(self):
         """ """
         # Check to see what difficulty player chose
-        if pygame.event.type == MOUSEBUTTONDOWN:
+        if pygame.event == MOUSEBUTTONDOWN:
             if self._status.difficulty_boxes[0].collidepoint(
                 pygame.mouse.get_pos()
             ):
@@ -60,8 +62,8 @@ class AimTrainerController:
 
     def exit_program(self):
         """ """
-        if pygame.event.type == QUIT:
+        if pygame.event == QUIT:
             self._status.terminate()
-        if pygame.event.type == KEYDOWN:
+        if pygame.event == KEYDOWN:
             if pygame.event.key == K_ESCAPE:
                 self._status.terminate()

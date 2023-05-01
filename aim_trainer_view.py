@@ -10,6 +10,8 @@ class AimTrainerView:
     Prompts text
     """
 
+    pygame.init()
+
     FONT = pygame.font.SysFont(None, 48)
 
     start_bg = pygame.image.load("range-start.png")
@@ -63,13 +65,13 @@ class AimTrainerView:
         )
         # Game stats prompt
         self.draw_text(
-            "Accuracy: " + str(self._status.accuracy) + "%",
+            "Accuracy: " + str(self._status.accuracy()) + "%",
             self.status.window_surface,
             269,
             414,
         )
         self.draw_text(
-            "Score: " + str(self._status.score),
+            "Score: " + str(self._status.score()),
             self._status.window_surface,
             308,
             450,
@@ -80,13 +82,13 @@ class AimTrainerView:
         """ """
         # display game status to player
         self.draw_text(
-            "Time: " + str(self._status.config[0]),
+            "Time: " + str(self._status.config([0])),
             self._status.window_surface,
             8,
             8,
         )
         self.draw_text(
-            "Score: " + str(self._status.score),
+            "Score: " + str(self._status.score()),
             self._status.window_surface,
             8,
             38,
@@ -94,18 +96,20 @@ class AimTrainerView:
 
     def display_targets(self):
         """ """
-        for target in self._status.resize_target:
-            self._status.window_surface.blit(self._status.resize_target, target)
+        for target in self._status.resize_target():
+            self._status.window_surface.blit(
+                self._status.resize_target(), target
+            )
 
     def game_background(self):
         """ """
-        self._status.window_surface.blit(self.bg_range, (0, 0))
+        self._status.window_surface.blit(self.range_bg, (0, 0))
 
     def start_screen(self):
         """ """
-        self._status.window_surface.blit(self.bg_start, (0, 0))
+        self._status.window_surface.blit(self.start_bg, (0, 0))
         # Display difficulties
-        for rect in self._status.difficulty_boxes:
+        for rect in self._status.difficulty_boxes():
             pygame.draw.rect(
                 self._status.window_surface, self._status.COLORS["RED"], rect
             )
