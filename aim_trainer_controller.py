@@ -40,20 +40,21 @@ class AimTrainerController:
             a string stating a difficulty
         """
         # Check to see what difficulty player chose
-        if pygame.event.get == MOUSEBUTTONDOWN:
-            if self._status.difficulty_boxes[0].collidepoint(
-                pygame.mouse.get_pos()
-            ):
-                return "easy"
-            if self._status.difficulty_boxes[1].collidepoint(
-                pygame.mouse.get_pos()
-            ):
-                return "medium"
-            if self._status.difficulty_boxes[2].collidepoint(
-                pygame.mouse.get_pos()
-            ):
-                return "hard"
-            
+        for event in pygame.event.get():
+            if event.type == MOUSEBUTTONDOWN:
+                if self._status.difficulty_boxes()[0].collidepoint(
+                    pygame.mouse.get_pos()
+                ):
+                    return "easy"
+                if self._status.difficulty_boxes()[1].collidepoint(
+                    pygame.mouse.get_pos()
+                ):
+                    return "medium"
+                if self._status.difficulty_boxes()[2].collidepoint(
+                    pygame.mouse.get_pos()
+                ):
+                    return "hard"
+
         return None
 
     def mouse_pos(self):

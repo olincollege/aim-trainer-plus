@@ -10,7 +10,7 @@ from aim_trainer_controller import AimTrainerController
 
 
 def main():
-    """ 
+    """
     Runs aim trainer
     """
     pygame.init()
@@ -42,7 +42,7 @@ def main():
         start = range.time_actions()
         pygame.display.update()
 
-    # end screen
+        # end screen
         while start == False:
             controller.exit_program()
             view.endgame_screen
