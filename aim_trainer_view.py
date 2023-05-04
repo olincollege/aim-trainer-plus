@@ -21,7 +21,7 @@ class AimTrainerView:
 
     pygame.init()
 
-    FONT = pygame.font.SysFont(None, 48)
+    FONT = pygame.font.Font('cs_regular.ttf', 48)
 
     start_bg_raw = pygame.image.load("range-start.png")
     end_bg_raw = pygame.image.load("range-end.png")
@@ -82,7 +82,7 @@ class AimTrainerView:
             self._status.window_surface,
             200,
             325,
-            pygame.font.SysFont('/home/ohimsworth/aim-trainer-plus/cs_regular.ttf', 72, True),
+            pygame.font.SysFont('cs_regular.ttf', 72, True),
         )
         # Restart game prompt
         self.draw_text(
@@ -128,6 +128,7 @@ class AimTrainerView:
         Spawn targets in cords of pre-made list
         """
         for target in self._status.targets():
+            #print(self._status.resize_target(), target)
             self._status.window_surface.blit(
                 self._status.resize_target(), target
             )
