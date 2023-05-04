@@ -1,9 +1,8 @@
 """
 Controller for Aim Trainer
 """
-import pygame, random, sys, os
+import pygame
 from pygame.locals import *
-
 
 class AimTrainerController:
     """
@@ -17,9 +16,41 @@ class AimTrainerController:
 
     def __init__(self, status):
         """
-        Saves instance
+        Saves instance of AimTrainerRange
+
+        status: a instance of AimTrainerRange
         """
         self._status = status
+
+    def event_detect(self, game_state):
+        """
+        Loops through pygame events checking for a event activation and then depending on game state calls needed function.
+
+        Args:
+            game_state: a string stating what part of the game the programs in
+        """
+        for event in pygame.event.get():
+            if event.type == MOUSEMOTION:
+                #self.mouse_pos()
+                #print('mouse')
+                self._status.MOUSE_X = event.pos[0]
+                self._status.MOUSE_Y = event.pos[1]
+            if event.type == MOUSEBUTTONDOWN:
+                if game_state == "start":
+                    #print('start')
+                    self._status.populate_config(self.choose_difficulty())
+                elif game_state == "range":
+                    #print('range button clicked')
+                    self._status.check_target_hit()
+                elif game_state == "end":
+                    #print("end")
+                    return True
+            if event.type == QUIT:
+                self._status.terminate()
+            if event.type == KEYDOWN:
+                if event.key == K_ESCAPE:
+                    self._status.terminate()
+
 
     def end_screen_check(self):
         """
@@ -29,8 +60,7 @@ class AimTrainerController:
             a boolean dependent on choice
         """
         # check to see if player is trying to exit game
-        if pygame.event.get == MOUSEBUTTONDOWN:
-            return True
+        return True
 
     def choose_difficulty(self):
         """
@@ -40,20 +70,18 @@ class AimTrainerController:
             a string stating a difficulty
         """
         # Check to see what difficulty player chose
-        for event in pygame.event.get():
-            if event.type == MOUSEBUTTONDOWN:
-                if self._status.difficulty_boxes()[0].collidepoint(
-                    pygame.mouse.get_pos()
-                ):
-                    return "easy"
-                if self._status.difficulty_boxes()[1].collidepoint(
-                    pygame.mouse.get_pos()
-                ):
-                    return "medium"
-                if self._status.difficulty_boxes()[2].collidepoint(
-                    pygame.mouse.get_pos()
-                ):
-                    return "hard"
+        if self._status.difficulty_boxes()[0].collidepoint(
+            pygame.mouse.get_pos()
+        ):
+            return "easy"
+        if self._status.difficulty_boxes()[1].collidepoint(
+            pygame.mouse.get_pos()
+        ):
+            return "medium"
+        if self._status.difficulty_boxes()[2].collidepoint(
+            pygame.mouse.get_pos()
+        ):
+            return "hard"
 
         return None
 
@@ -61,9 +89,8 @@ class AimTrainerController:
         """
         Saves mouse position when mouse is clicked
         """
-        if pygame.event.get == MOUSEMOTION:
-            self._status.MOUSE_X = pygame.mouse.get_pos[0]
-            self._status.MOUSE_Y = pygame.mouse.get_pos[1]
+        self._status.MOUSE_X = pygame.mouse.get_pos()[0]
+        self._status.MOUSE_Y = pygame.mouse.get_pos()[1]
 
     def exit_program(self):
         """

@@ -1,7 +1,7 @@
 """
 Compiles aim trainer mvc files.
 """
-import pygame, random, sys, os
+import pygame
 from pygame.locals import *
 
 from aim_trainer_range import AimTrainerRange
@@ -22,33 +22,34 @@ def main():
     # Start screen
     start = False
     while start == False:
-        controller.exit_program()
         view.start_screen()
-        range.populate_config(controller.choose_difficulty())
+        controller.event_detect("start")
         if range.config() != []:
             start = True
         pygame.display.update()
 
     # game
     while start == True:
-        controller.exit_program()
         view.game_background()
         view.game_status()
         range.generate_targets()
-        range.check_valid_target()
+        # range.check_valid_target()
         view.display_targets()
-        controller.mouse_pos()
-        range.check_target_hit()
+        controller.event_detect("range")
+        #range.check_target_hit()
         start = range.time_actions()
         pygame.display.update()
 
-        # end screen
-        while start == False:
-            controller.exit_program()
-            view.endgame_screen
-            if controller.end_screen_check():
-                main()
-            pygame.display.update()
+    # end screen
+    #print("end function")
+    while start == False:
+        #print("end screen")
+        view.endgame_screen()
+        if controller.event_detect("end"):
+            #print("repeat game")
+            main()
+            return
+        pygame.display.update()
 
 
 if __name__ == "__main__":

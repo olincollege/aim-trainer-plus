@@ -1,7 +1,7 @@
 """
 Module for Aim Trainer
 """
-import pygame, random, sys, os
+import pygame, random, sys
 from pygame.locals import *
 
 
@@ -37,8 +37,10 @@ class AimTrainerRange:
     }
 
     # Window Size
-    WINDOW_HEIGHT = 768
-    WINDOW_WIDTH = 1366
+    #WINDOW_HEIGHT = 768
+    #WINDOW_WIDTH = 1366
+    WINDOW_HEIGHT = 750
+    WINDOW_WIDTH = 750
 
     # Bounds for window
     window_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
@@ -60,8 +62,8 @@ class AimTrainerRange:
         self._hit_shots = 0
         self._total_shots = 0
         # Mouse position
-        self._MOUSE_Y = round(self.WINDOW_HEIGHT / 2)
-        self._MOUSE_X = round(self.WINDOW_WIDTH / 2)
+        self.MOUSE_Y = round(self.WINDOW_HEIGHT / 2)
+        self.MOUSE_X = round(self.WINDOW_WIDTH / 2)
 
     def config(self):
         """
@@ -83,14 +85,14 @@ class AimTrainerRange:
             a int being the score
         """
         return self._score
-    
+
     def MOUSE_Y(self):
         """
         Returns:
             a int of the mouse y position
         """
         return self._MOUSE_Y
-    
+
     def MOUSE_X(self):
         """
         Returns:
@@ -130,9 +132,9 @@ class AimTrainerRange:
         """
         # Settings for difficulty. (time, amount of target, size of target)
         DIFFICULTY_SETTINGS = {
-            "easy": [9, 2, 40],
-            "medium": [6, 4, 30],
-            "hard": [5, 5, 20],
+            "easy": [15, 5, 60],
+            "medium": [15, 5, 40],
+            "hard": [15, 5, 20],
         }
         # Saves settings to config per difficulty
         if difficulty == "easy":
@@ -162,44 +164,51 @@ class AimTrainerRange:
         """
         Generate random placement of targets and add those cords to a list
         """
-        self._targets.append(
-            pygame.Rect(
+        if len(self._targets) < self._config[1]:
+            target_cords = pygame.Rect(
                 (random.randint(0, self.WINDOW_WIDTH - self._config[2])),
                 (random.randint(0, self.WINDOW_HEIGHT - self._config[2])),
                 self._config[2],
                 self._config[2],
             )
-        )
+            #print("TARGET COORDS: ", target_cords)
+            if self.check_valid_target(target_cords):
+                self._targets.append(target_cords)
 
-    def check_valid_target(self):
+    def check_valid_target(self, target_cords):
         """
         Check to see if target is in bound if is remove target from list and if not add to target counter
         """
-        if (
-            self._targets[self._amount_targets].topleft[0] < 135
-            and self._targets[self._amount_targets].topleft[1] < 65
-        ):
-            self._targets.pop(self._amount_targets)
+        if target_cords.topleft[0] < 135 and target_cords.topleft[1] < 65:
+            return False
         else:
-            self._amount_targets += 1
+            return True
 
     def check_target_hit(self):
         """
         Check to see if mouse position is the same as a target. If so remove target from scree, subtract from amount of visible targets, add to score, and add to hit count
         """
         # Check to see if mouse position overlaps with targets
+        print('check target function')
         for target in self._targets[:]:
+            print(self.MOUSE_X)
+            print(self.MOUSE_Y)
+            print(target.topleft[0],target.topleft[1])
+            print(target.bottomright[0],target.bottomright[1])
+            print('checking')
             # if target hit play hit sound, remove target, and add to score
             if (
-                self._MOUSE_X > target.topleft[0]
-                and self._MOUSE_X < target.bottomright[0]
-                and self._MOUSE_Y > target.topleft[1]
-                and self._MOUSE_Y < target.bottomright[1]
+                self.MOUSE_X > target.topleft[0]
+                and self.MOUSE_X < target.bottomright[0]
+                and self.MOUSE_Y > target.topleft[1]
+                and self.MOUSE_Y < target.bottomright[1]
             ):
+                print('should remove target')
                 self._targets.remove(target)
-                self._amount_targets -= 1
+                #self._amount_targets -= 1
                 self._score += 1
                 self._hit_shots += 1
+        self._total_shots += 1
 
     def time_actions(self):
         """
@@ -212,7 +221,7 @@ class AimTrainerRange:
         if self._config[0] <= 0:
             # end game and display player stats
             return False
-        self.tick_counter += 1
+        self._tick_counter += 1
 
         if self._tick_counter % self.FPS == 0:
             # game still going subtract from time
@@ -227,8 +236,10 @@ class AimTrainerRange:
             accuracy: a int being accuracy
         """
         # Calculate score
-        if self._totalShots != 0 and self._hitShots != 0:
-            accuracy = round(self._hitShots / self._totalShots * 100)
+        #print(self._total_shots)
+        #print(self._total_shots)
+        if self._total_shots != 0 and self._hit_shots != 0:
+            accuracy = round(self._hit_shots / self._total_shots * 100)
         else:
             accuracy = 0
 
