@@ -14,7 +14,6 @@ class AimTrainerRange:
         WINDOW_HEIGHT: a int representing the amount of pixels wanted for height
         WINDOW_WIDTH: a int representing the amount of pixels wanted for width
         window_surface: a function that displays a window with given height and width
-        main_clock: an object that helps track time
         _config: a list containing ints that determine game difficulty settings
         _tick_counter: a int of the time gone by in milliseconds
         _targets: a list containing cords for upcoming target spawn
@@ -37,33 +36,41 @@ class AimTrainerRange:
     }
 
     # Window Size
-    #WINDOW_HEIGHT = 768
-    #WINDOW_WIDTH = 1366
+    # WINDOW_HEIGHT = 768
+    # WINDOW_WIDTH = 1366
     WINDOW_HEIGHT = 750
     WINDOW_WIDTH = 750
 
     # Bounds for window
-    window_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
     # time
-    main_clock = pygame.time.Clock()
 
     def __init__(self):
         """
         Sets starting variables
         """
+        self.window_surface = pygame.display.set_mode(
+            (self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+        )
         # Game variables
         self._config = []
         self._tick_counter = 0
         self._targets = []
         self._amount_targets = 0
         self._score = 0
-        self.FPS = 75
+        self.FPS = 60
         self._hit_shots = 0
         self._total_shots = 0
+        self._target_image = None
         # Mouse position
         self.MOUSE_Y = round(self.WINDOW_HEIGHT / 2)
         self.MOUSE_X = round(self.WINDOW_WIDTH / 2)
+        self.file_picker = None
+        self.manager = None
+
+    @property
+    def target_image(self):
+        return self._target_image
 
     def config(self):
         """
@@ -100,7 +107,7 @@ class AimTrainerRange:
         """
         return self._MOUSE_X
 
-    def terminate():
+    def terminate(self):
         """
         Ends Pygame
         """
@@ -145,20 +152,15 @@ class AimTrainerRange:
             self._config = DIFFICULTY_SETTINGS["hard"]
         return self._config
 
-    def resize_target(self):
+    def set_target(self, path):
         """
-        Resize target based off difficulty settings
-
-        Returns:
-            a image of the target
+        Args:
+        path (str): path to target image
         """
-        # Takes imported image
-        target_image = pygame.image.load("target.png")
-        # Scale image according to config
-        target_image = pygame.transform.scale(
-            target_image, (self._config[2], self._config[2])
+        img = pygame.image.load(path)
+        self._target_image = pygame.transform.scale(
+            img, (self._config[2], self._config[2])
         )
-        return target_image
 
     def generate_targets(self):
         """
@@ -171,7 +173,7 @@ class AimTrainerRange:
                 self._config[2],
                 self._config[2],
             )
-            #print("TARGET COORDS: ", target_cords)
+            # print("TARGET COORDS: ", target_cords)
             if self.check_valid_target(target_cords):
                 self._targets.append(target_cords)
 
@@ -189,13 +191,13 @@ class AimTrainerRange:
         Check to see if mouse position is the same as a target. If so remove target from scree, subtract from amount of visible targets, add to score, and add to hit count
         """
         # Check to see if mouse position overlaps with targets
-        print('check target function')
+        print("check target function")
         for target in self._targets[:]:
             print(self.MOUSE_X)
             print(self.MOUSE_Y)
-            print(target.topleft[0],target.topleft[1])
-            print(target.bottomright[0],target.bottomright[1])
-            print('checking')
+            print(target.topleft[0], target.topleft[1])
+            print(target.bottomright[0], target.bottomright[1])
+            print("checking")
             # if target hit play hit sound, remove target, and add to score
             if (
                 self.MOUSE_X > target.topleft[0]
@@ -203,9 +205,9 @@ class AimTrainerRange:
                 and self.MOUSE_Y > target.topleft[1]
                 and self.MOUSE_Y < target.bottomright[1]
             ):
-                print('should remove target')
+                print("should remove target")
                 self._targets.remove(target)
-                #self._amount_targets -= 1
+                # self._amount_targets -= 1
                 self._score += 1
                 self._hit_shots += 1
         self._total_shots += 1
@@ -236,8 +238,8 @@ class AimTrainerRange:
             accuracy: a int being accuracy
         """
         # Calculate score
-        #print(self._total_shots)
-        #print(self._total_shots)
+        # print(self._total_shots)
+        # print(self._total_shots)
         if self._total_shots != 0 and self._hit_shots != 0:
             accuracy = round(self._hit_shots / self._total_shots * 100)
         else:
