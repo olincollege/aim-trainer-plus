@@ -22,6 +22,10 @@ class AimTrainerView:
     _start_bg: a reformated image
     _end_bg: a reformated image
     _range_bg: a reformated image
+    manager: a class method that creates manager for file selector dialog
+    rect: a class type that creates space for file dialog
+    rect.center: property that centers the file dialog rectangle
+    file_picker: class method provides rect with file selector dialog
     """
 
     pygame.init()
