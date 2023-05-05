@@ -2,6 +2,14 @@
 View for Aim Trainer
 """
 import pygame
+from pygame.locals import *
+import pygame_gui
+
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from aim_trainer_range import AimTrainerRange
+
 
 class AimTrainerView:
     """
@@ -17,19 +25,38 @@ class AimTrainerView:
     _range_bg: a reformated image
     """
 
-    pygame.init()
+    # pygame.init()
 
-    FONT = pygame.font.Font('cs_regular.ttf', 48)
-
-    start_bg_raw = pygame.image.load("range-start.png")
-    end_bg_raw = pygame.image.load("range-end.png")
-    range_bg_raw = pygame.image.load("range2.png")
-
-    def __init__(self, status):
+    def __init__(self, status: "AimTrainerRange"):
         """
         Args:
             status: a instance of AimTrainerRange
         """
+
+        # pygame.init()
+        print("Initialized PYGAME")
+        self.manager = pygame_gui.UIManager(
+            (status.WINDOW_WIDTH, status.WINDOW_HEIGHT)
+        )
+        rect = pygame.Rect(
+            (0, 0), (status.WINDOW_WIDTH / 2, status.WINDOW_HEIGHT / 2)
+        )
+        rect.center = status.WINDOW_WIDTH / 2, status.WINDOW_HEIGHT / 2
+        self.file_picker = pygame_gui.windows.UIFileDialog(
+            rect=rect,
+            manager=self.manager,
+            window_title="Selecto victimo",
+        )
+        status.manager = self.manager
+        status.file_picker = self.file_picker
+        self.game_clock = pygame.time.Clock()
+
+        self.FONT = pygame.font.SysFont(None, 48)
+
+        self.start_bg_raw = pygame.image.load("range-start.png")
+        self.end_bg_raw = pygame.image.load("range-end.png")
+        self.range_bg_raw = pygame.image.load("range2.png")
+
         self._status = status
         self._start_bg = pygame.transform.scale(
             self.start_bg_raw,
@@ -80,7 +107,7 @@ class AimTrainerView:
             self._status.window_surface,
             200,
             325,
-            pygame.font.Font('cs_regular.ttf', 72), self._status.COLORS["BLUE"]
+            pygame.font.SysFont('cs_regular.ttf', 72, True),
         )
         # Restart game prompt
         self.draw_text(
@@ -102,11 +129,16 @@ class AimTrainerView:
         )
         pygame.display.update()
 
+    def display_picker(self):
+        self._status.window_surface.blit(self._end_bg, (0, 0))
+        self.manager.draw_ui(self._status.window_surface)
+        pygame.display.update()
+
     def game_status(self):
         """
         Display time and and score of ongoing game
         """
-        #print("CONFIG: ", self._status.config())
+        # print("CONFIG: ", self._status.config())
 
         # display game status to player
         self.draw_text(
@@ -127,10 +159,11 @@ class AimTrainerView:
         Spawn targets in cords of pre-made list
         """
         for target in self._status.targets():
-            #print(self._status.resize_target(), target)
-            self._status.window_surface.blit(
-                self._status.resize_target(), target
-            )
+            # print(self._status.resize_target(), target)
+            self._status.window_surface.blit(self._status.target_image, target)
+            # self._status.window_surface.blit(
+            #     self._status.resize_target(), target
+            # )
 
     def game_background(self):
         """
@@ -154,7 +187,7 @@ class AimTrainerView:
                 self._status.window_surface,
                 90,
                 150,
-                pygame.font.Font('cs_regular.ttf', 80),
+                pygame.font.SysFont("cs_regular.ttf", 112),
             )
             self.draw_text(
                 "Easy",

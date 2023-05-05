@@ -38,33 +38,43 @@ class AimTrainerRange:
     }
 
     # Window Size
-    #WINDOW_HEIGHT = 768
-    #WINDOW_WIDTH = 1366
+    # WINDOW_HEIGHT = 768
+    # WINDOW_WIDTH = 1366
     WINDOW_HEIGHT = 750
     WINDOW_WIDTH = 750
 
     # Bounds for window
-    window_surface = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
 
     # time
-    main_clock = pygame.time.Clock()
 
     def __init__(self):
         """
         Sets starting variables
         """
+        self.window_surface = pygame.display.set_mode(
+            (self.WINDOW_WIDTH, self.WINDOW_HEIGHT)
+        )
         # Game variables
         self._config = []
         self._tick_counter = 0
         self._targets = []
         self._amount_targets = 0
         self._score = 0
-        self.fps = 75
+        self.fps = 60
         self._hit_shots = 0
         self._total_shots = 0
+        self._target_image = None
         # Mouse position
         self.mouse_x = round(self.WINDOW_HEIGHT / 2)
         self.mouse_y = round(self.WINDOW_WIDTH / 2)
+        self.MOUSE_Y = round(self.WINDOW_HEIGHT / 2)
+        self.MOUSE_X = round(self.WINDOW_WIDTH / 2)
+        self.file_picker = None
+        self.manager = None
+
+    @property
+    def target_image(self):
+        return self._target_image
 
     def config(self):
         """
@@ -86,6 +96,13 @@ class AimTrainerRange:
             a int being the score
         """
         return self._score
+
+    def terminate(self):
+        """
+        Ends Pygame
+        """
+        pygame.quit()
+        sys.exit()
 
     def difficulty_boxes(self):
         """
@@ -126,20 +143,15 @@ class AimTrainerRange:
             self._config = difficulty_settings["hard"]
         return self._config
 
-    def resize_target(self):
+    def set_target(self, path):
         """
-        Resize target based off difficulty settings
-
-        Returns:
-            a image of the target
+        Args:
+        path (str): path to target image
         """
-        # Takes imported image
-        target_image = pygame.image.load("target.png")
-        # Scale image according to config
-        target_image = pygame.transform.scale(
-            target_image, (self._config[2], self._config[2])
+        img = pygame.image.load(path)
+        self._target_image = pygame.transform.scale(
+            img, (self._config[2], self._config[2])
         )
-        return target_image
 
     def generate_targets(self):
         """
@@ -152,7 +164,7 @@ class AimTrainerRange:
                 self._config[2],
                 self._config[2],
             )
-            #print("TARGET COORDS: ", target_cords)
+            # print("TARGET COORDS: ", target_cords)
             if self.check_valid_target(target_cords):
                 self._targets.append(target_cords)
 
@@ -186,9 +198,10 @@ class AimTrainerRange:
                 and self.mouse_y > target.topleft[1]
                 and self.mouse_y < target.bottomright[1]
             ):
-                #print('should remove target')
+                # print('should remove target')
+                print("should remove target")
                 self._targets.remove(target)
-                #self._amount_targets -= 1
+                # self._amount_targets -= 1
                 self._score += 1
                 self._hit_shots += 1
         self._total_shots += 1
@@ -220,8 +233,8 @@ class AimTrainerRange:
             accuracy: a int being accuracy
         """
         # Calculate score
-        #print(self._total_shots)
-        #print(self._total_shots)
+        # print(self._total_shots)
+        # print(self._total_shots)
         if self._total_shots != 0 and self._hit_shots != 0:
             accuracy = round(self._hit_shots / self._total_shots * 100)
         else:

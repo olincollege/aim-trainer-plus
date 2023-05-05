@@ -3,7 +3,7 @@ Controller for Aim Trainer
 """
 import sys
 import pygame
-from pygame.locals import MOUSEMOTION, MOUSEBUTTONDOWN, QUIT, KEYDOWN, K_ESCAPE
+from pygame_gui import UI_BUTTON_PRESSED
 
 
 class AimTrainerController:
@@ -11,10 +11,8 @@ class AimTrainerController:
     Tracks and takes user input
 
     Attributes:
-        _status: a instance
+        game_range: a instance
     """
-
-    pygame.init()
 
     def __init__(self, status):
         """
@@ -22,9 +20,9 @@ class AimTrainerController:
 
         status: a instance of AimTrainerRange
         """
-        self._status = status
+        self.game_range = status
 
-    def event_detect(self, game_state):
+    def event_detect(self, game_state, time_delta):
         """
         Loops through pygame events checking for a event activation and then
         depending on game state calls needed function.
@@ -32,29 +30,42 @@ class AimTrainerController:
         Args:
             game_state: a string stating what part of the game the programs in
         """
+
         for event in pygame.event.get():
-            if event.type == MOUSEMOTION:
-                # self.mouse_pos()
-                # print('mouse')
-                self._status.mouse_x = event.pos[0]
-                self._status.mouse_y = event.pos[1]
-            if event.type == MOUSEBUTTONDOWN:
+            if event.type == pygame.QUIT:
+                self.game_range.terminate()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.game_range.terminate()
+
+            if game_state == "file":
+                if (
+                    event.type == pygame.USEREVENT
+                    and event.user_type == UI_BUTTON_PRESSED
+                ):
+                    if (
+                        event.ui_element
+                        == self.game_range.file_picker.ok_button
+                    ):
+                        self.game_range.set_target(
+                            self.game_range.file_picker.current_file_path
+                        )
+                self.game_range.manager.process_events(event)
+                continue
+
+            if event.type == pygame.MOUSEMOTION:
+                self.game_range.MOUSE_X = event.pos[0]
+                self.game_range.MOUSE_Y = event.pos[1]
+            if event.type == pygame.MOUSEBUTTONDOWN:
                 if game_state == "start":
-                    # print('start')
-                    self._status.populate_config(self.choose_difficulty())
+                     #print("start")
+                    self.choose_difficulty()
                 elif game_state == "range":
-                    # print('range button clicked')
-                    self._status.check_target_hit()
+                    self.game_range.check_target_hit()
                 elif game_state == "end":
-                    # print("end")
                     return True
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
+            self.game_range.manager.process_events(event)
+        self.game_range.manager.update(time_delta)
 
     def end_screen_check(self):
         """
@@ -76,27 +87,29 @@ class AimTrainerController:
             a string stating a difficulty
         """
         # Check to see what difficulty player chose
-        if self._status.difficulty_boxes()[0].collidepoint(
+        diff = None
+        if self.game_range.difficulty_boxes()[0].collidepoint(
             pygame.mouse.get_pos()
         ):
-            return "easy"
-        if self._status.difficulty_boxes()[1].collidepoint(
+            diff = "easy"
+        if self.game_range.difficulty_boxes()[1].collidepoint(
             pygame.mouse.get_pos()
         ):
-            return "medium"
-        if self._status.difficulty_boxes()[2].collidepoint(
+            diff = "medium"
+        if self.game_range.difficulty_boxes()[2].collidepoint(
             pygame.mouse.get_pos()
         ):
-            return "hard"
+            diff = "hard"
 
-        return None
+        if diff:
+            self.game_range.populate_config(diff)
 
     def mouse_pos(self):
         """
         Saves mouse position when mouse is clicked
         """
-        self._status.mouse_x = pygame.mouse.get_pos()[0]
-        self._status.mouse_y = pygame.mouse.get_pos()[1]
+        self.game_range.MOU = pygame.mouse.get_pos()[0]
+        self.game_range.MOUSE_Y = pygame.mouse.get_pos()[1]
 
     def exit_program(self):
         """
@@ -104,10 +117,8 @@ class AimTrainerController:
         closes it
         """
         for event in pygame.event.get():
-            if event.type == QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == KEYDOWN:
-                if event.key == K_ESCAPE:
-                    pygame.quit()
-                    sys.exit()
+            if event.type == pygame.QUIT:
+                self.game_range.terminate()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    self.game_range.terminate()
