@@ -1,8 +1,10 @@
 """
 Controller for Aim Trainer
 """
+import sys
 import pygame
-from pygame.locals import *
+from pygame.locals import MOUSEMOTION, MOUSEBUTTONDOWN, QUIT, KEYDOWN, K_ESCAPE
+
 
 class AimTrainerController:
     """
@@ -24,37 +26,40 @@ class AimTrainerController:
 
     def event_detect(self, game_state):
         """
-        Loops through pygame events checking for a event activation and then depending on game state calls needed function.
+        Loops through pygame events checking for a event activation and then
+        depending on game state calls needed function.
 
         Args:
             game_state: a string stating what part of the game the programs in
         """
         for event in pygame.event.get():
             if event.type == MOUSEMOTION:
-                #self.mouse_pos()
-                #print('mouse')
-                self._status.MOUSE_X = event.pos[0]
-                self._status.MOUSE_Y = event.pos[1]
+                # self.mouse_pos()
+                # print('mouse')
+                self._status.mouse_x = event.pos[0]
+                self._status.mouse_y = event.pos[1]
             if event.type == MOUSEBUTTONDOWN:
                 if game_state == "start":
-                    #print('start')
+                    # print('start')
                     self._status.populate_config(self.choose_difficulty())
                 elif game_state == "range":
-                    #print('range button clicked')
+                    # print('range button clicked')
                     self._status.check_target_hit()
                 elif game_state == "end":
-                    #print("end")
+                    # print("end")
                     return True
             if event.type == QUIT:
-                self._status.terminate()
+                pygame.quit()
+                sys.exit()
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
-                    self._status.terminate()
-
+                    pygame.quit()
+                    sys.exit()
 
     def end_screen_check(self):
         """
-        Checks to see if user wants to start another game by clicking on the screen
+        Checks to see if user wants to start another game by clicking on the
+        screen
 
         Returns:
             a boolean dependent on choice
@@ -64,7 +69,8 @@ class AimTrainerController:
 
     def choose_difficulty(self):
         """
-        Takes player choice on difficulty by logging if player clicks on a position occupied by the difficulty text
+        Takes player choice on difficulty by logging if player clicks on a
+        position occupied by the difficulty text
 
         Returns:
             a string stating a difficulty
@@ -89,16 +95,19 @@ class AimTrainerController:
         """
         Saves mouse position when mouse is clicked
         """
-        self._status.MOUSE_X = pygame.mouse.get_pos()[0]
-        self._status.MOUSE_Y = pygame.mouse.get_pos()[1]
+        self._status.mouse_x = pygame.mouse.get_pos()[0]
+        self._status.mouse_y = pygame.mouse.get_pos()[1]
 
     def exit_program(self):
         """
-        Checks if player is trying to escape or close game window and then closes it
+        Checks if player is trying to escape or close game window and then
+        closes it
         """
         for event in pygame.event.get():
             if event.type == QUIT:
-                self._status.terminate()
+                pygame.quit()
+                sys.exit()
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
-                    self._status.terminate()
+                    pygame.quit()
+                    sys.exit()

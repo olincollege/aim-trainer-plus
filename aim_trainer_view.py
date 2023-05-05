@@ -2,8 +2,6 @@
 View for Aim Trainer
 """
 import pygame
-from pygame.locals import *
-
 
 class AimTrainerView:
     """
@@ -50,8 +48,8 @@ class AimTrainerView:
         self,
         text,
         surface,
-        x,
-        y,
+        x_axis,
+        y_axis,
         font=None,
         color=None,
     ):
@@ -61,13 +59,13 @@ class AimTrainerView:
         if font is None:
             font = self.FONT
         if color is None:
-            color = self._status.COLORS["RED"]
+            color = self._status.COLORS["BLACK"]
         # Load text
         text_object = font.render(text, 1, color)
         # get area of text
         text_rect = text_object.get_rect()
         # align text
-        text_rect.topleft = (x, y)
+        text_rect.topleft = (x_axis, y_axis)
         # display on surface
         surface.blit(text_object, text_rect)
 
@@ -82,24 +80,25 @@ class AimTrainerView:
             self._status.window_surface,
             200,
             325,
-            pygame.font.SysFont('cs_regular.ttf', 72, True),
+            pygame.font.Font('cs_regular.ttf', 72), self._status.COLORS["BLUE"]
         )
         # Restart game prompt
         self.draw_text(
-            "Click anywhere to restart", self._status.window_surface, 170, 380
+            "Click anywhere to restart", self._status.window_surface, 100, 380,
+            None, self._status.COLORS["BLUE"]
         )
         # Game stats prompt
         self.draw_text(
             "Accuracy: " + str(self._status.accuracy()) + "%",
             self._status.window_surface,
             269,
-            414,
+            414, None, self._status.COLORS["BLUE"]
         )
         self.draw_text(
             "Score: " + str(self._status.score()),
             self._status.window_surface,
             308,
-            450,
+            450, None, self._status.COLORS["BLUE"]
         )
         pygame.display.update()
 
@@ -141,7 +140,8 @@ class AimTrainerView:
 
     def start_screen(self):
         """
-        Display text to pick difficulty alongside the different difficulty levels all in pre-made boxes
+        Display text to pick difficulty alongside the different difficulty
+        levels all in pre-made boxes
         """
         self._status.window_surface.blit(self._start_bg, (0, 0))
         # Display difficulties
@@ -154,7 +154,7 @@ class AimTrainerView:
                 self._status.window_surface,
                 90,
                 150,
-                pygame.font.SysFont('cs_regular.ttf', 112),
+                pygame.font.Font('cs_regular.ttf', 80),
             )
             self.draw_text(
                 "Easy",

@@ -2,7 +2,6 @@
 Compiles aim trainer mvc files.
 """
 import pygame
-from pygame.locals import *
 
 from aim_trainer_range import AimTrainerRange
 from aim_trainer_view import AimTrainerView
@@ -15,34 +14,34 @@ def main():
     """
     pygame.init()
 
-    range = AimTrainerRange()
-    view = AimTrainerView(range)
-    controller = AimTrainerController(range)
+    module = AimTrainerRange()
+    view = AimTrainerView(module)
+    controller = AimTrainerController(module)
 
     # Start screen
     start = False
-    while start == False:
+    while start is False:
         view.start_screen()
         controller.event_detect("start")
-        if range.config() != []:
+        if module.config():
             start = True
         pygame.display.update()
 
     # game
-    while start == True:
+    while start is True:
         view.game_background()
         view.game_status()
-        range.generate_targets()
+        module.generate_targets()
         # range.check_valid_target()
         view.display_targets()
         controller.event_detect("range")
         #range.check_target_hit()
-        start = range.time_actions()
+        start = module.time_actions()
         pygame.display.update()
 
     # end screen
     #print("end function")
-    while start == False:
+    while start is False:
         #print("end screen")
         view.endgame_screen()
         if controller.event_detect("end"):
