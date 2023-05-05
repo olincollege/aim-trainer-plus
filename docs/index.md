@@ -33,7 +33,7 @@ Attribution for any external resources you used
 Visit our github: 
 https://github.com/olincollege/aim-trainer-plus
 
-To play:
+## To play:
 - Install required packages and libraries: 'pip install -r requirements.txt'
 - Run 'python aim_trainer_game.py'
 
