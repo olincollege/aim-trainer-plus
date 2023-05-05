@@ -2,7 +2,7 @@
 
 ### Countless missed shots on fortnite, hundreds of losses on call of duty, all of this led us to wonder: How could we get better at shooting games? Our mission was to create the best most engaging aim trainer possible, so that we would never have to experience another missed shot playing video games.
 
-While there are many aim trainers that exist today we found that a lot of them lack personality, which led us to discover and implement the import feature of out game, shown below. 
+While there are many aim trainers that exist today we found that a lot of them lack personality, which led us to discover and implement some unique features. 
 
 ## About Us
 
