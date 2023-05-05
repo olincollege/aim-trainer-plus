@@ -43,6 +43,8 @@ Once you are finished with the game you will be able to see the score that you a
 
 We hope that you enjoy the game. Train hard so that you can get more Victory Royale's!
 
+https://user-images.githubusercontent.com/123502998/236499516-a611edd0-5280-4f7b-968d-4bdedf2d284e.mov
+
 Visit our github: 
 https://github.com/olincollege/aim-trainer-plus
 
