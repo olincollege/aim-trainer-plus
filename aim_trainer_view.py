@@ -30,7 +30,7 @@ class AimTrainerView:
 
     game_clock = pygame.time.Clock()
 
-    #Import Backgrounds
+    # Import Backgrounds
     start_bg_raw = pygame.image.load("range-start.png")
     end_bg_raw = pygame.image.load("range-end.png")
     range_bg_raw = pygame.image.load("range2.png")
@@ -42,14 +42,18 @@ class AimTrainerView:
         """
         self._status = status
 
-        #File Search Code
+        # File Search Code
         self.manager = pygame_gui.UIManager(
             (self._status.WINDOW_WIDTH, self._status.WINDOW_HEIGHT)
         )
         rect = pygame.Rect(
-            (0, 0), (self._status.WINDOW_WIDTH / 2, self._status.WINDOW_HEIGHT / 2)
+            (0, 0),
+            (self._status.WINDOW_WIDTH / 2, self._status.WINDOW_HEIGHT / 2),
         )
-        rect.center = self._status.WINDOW_WIDTH / 2, self._status.WINDOW_HEIGHT / 2
+        rect.center = (
+            self._status.WINDOW_WIDTH / 2,
+            self._status.WINDOW_HEIGHT / 2,
+        )
         self.file_picker = pygame_gui.windows.UIFileDialog(
             rect=rect,
             manager=self.manager,
@@ -58,7 +62,7 @@ class AimTrainerView:
         status.manager = self.manager
         status.file_picker = self.file_picker
 
-        #Reformate Background images
+        # Reformate Background images
         self._start_bg = pygame.transform.scale(
             self.start_bg_raw,
             (self._status.WINDOW_WIDTH, self._status.WINDOW_HEIGHT),
@@ -92,7 +96,7 @@ class AimTrainerView:
         text_object = font.render(text, 1, color)
         # Loaded text outline
         text_object_outline = font.render(text, 1, self._status.COLORS["BLACK"])
-        
+
         # Create a new surface for the final text with a stroke
         text_stroke = pygame.Surface(
             (text_object.get_width() + 4, text_object.get_height() + 4),
