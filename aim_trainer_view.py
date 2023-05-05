@@ -159,8 +159,12 @@ class AimTrainerView:
         """
         Spawn targets in cords of pre-made list
         """
-        for pos in self._status.targets():
-            self._status.window_surface.blit(self._status.target_image, pos)
+        for target in self._status.targets():
+            # print(self._status.resize_target(), target)
+            self._status.window_surface.blit(self._status.target_image, target)
+            # self._status.window_surface.blit(
+            #     self._status.resize_target(), target
+            # )
 
     def game_background(self):
         """

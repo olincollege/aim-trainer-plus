@@ -193,11 +193,11 @@ class AimTrainerRange:
         # Check to see if mouse position overlaps with targets
         print("check target function")
         for target in self._targets[:]:
-            print(self.MOUSE_X)
-            print(self.MOUSE_Y)
-            print(target.topleft[0], target.topleft[1])
-            print(target.bottomright[0], target.bottomright[1])
-            print("checking")
+            # print(self.MOUSE_X)
+            # print(self.MOUSE_Y)
+            # print(target.topleft[0],target.topleft[1])
+            # print(target.bottomright[0],target.bottomright[1])
+            # print('checking')
             # if target hit play hit sound, remove target, and add to score
             if (
                 self.MOUSE_X > target.topleft[0]
@@ -205,6 +205,7 @@ class AimTrainerRange:
                 and self.MOUSE_Y > target.topleft[1]
                 and self.MOUSE_Y < target.bottomright[1]
             ):
+                # print('should remove target')
                 print("should remove target")
                 self._targets.remove(target)
                 # self._amount_targets -= 1
