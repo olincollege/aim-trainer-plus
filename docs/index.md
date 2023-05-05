@@ -7,9 +7,11 @@ While there are many aim trainers that exist today we found that a lot of them l
 ## About Us
 
 Krish Bhatia resides in New Jersey, where he enjoys playing basketball, riding his bike around, and going to concerts with his friends.
+
 Matthew Gazin is from Switzerland, where he often skiis steep mountains and enjoys the sun with his friends.
 
 ![15de8279-290a-4e7f-89ca-0a7b5a37454c](https://user-images.githubusercontent.com/123502998/236358801-18232079-e909-4df3-8bad-96204d4866d2.jpg)
+
 Owen Williams is from Long Island and loves to sail and take drives in his big orange truck.
 
 The three group members (shown above) spent their entire sophmore and junior years of highschool stuck in qurantine. With nothing else to do they did what every other teenager at that age was doing: play video games all day. However there was one issue, they were all terrible players. Here is what they created to train, so that they could beat their friends at Call of Duty.
