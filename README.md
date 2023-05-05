@@ -7,4 +7,18 @@ Aim Trainer spawns targets randomly around the for the player to click on. The m
 To install required packages and libraries: 'pip install -r requirements.txt'
 
 ## How to Play
-Run 'python aim_trainer_game.py' 
+1. Run 'python aim_trainer_game.py'
+2. Select difficulty
+3. From the file menu choose desired PNG from root of rep
+4. Click on targets
+5. When time is up click on end screen to restart
+6. Exit or Escape out at any time
+
+## Using Custom Images
+Four images are provides to you to use.
+- target.png
+- silhouette.png
+- trump.png
+- alien.png
+
+If you want to use your own image you have to add it to the root of repo. While it appears you can use any file on your device, the program will not allow this due to privacy settings. 
