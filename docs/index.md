@@ -6,12 +6,11 @@ While there are many aim trainers that exist today we found that a lot of them l
 
 ## About Us
 
-![IMG-5593](https://user-images.githubusercontent.com/123502998/236361637-aad01b92-50c1-411d-a450-f99887188a6d.jpg)
+![IMG-5594](https://user-images.githubusercontent.com/123502998/236361683-aad8e589-595a-4056-83d7-95d3169fc97d.jpg)
 
 Krish Bhatia resides in New Jersey, where he enjoys playing basketball, riding his bike around, and going to concerts with his friends.
 
 ![20220812-205511](https://user-images.githubusercontent.com/123502998/236361661-f9f4a76b-9d0a-43d7-97f2-1436103537b1.jpg)
-
 
 Matthew Gazin is from Switzerland, where he often skiis steep mountains and enjoys the sun with his friends.
 
@@ -21,8 +20,7 @@ Owen Williams is from Long Island and loves to sail and take drives in his big o
 
 The three group members (shown below) spent their entire sophmore and junior years of highschool stuck in qurantine. With nothing else to do they did what every other teenager at that age was doing: play video games all day. However there was one issue, they were all terrible players. Here is what they created to train, so that they could beat their friends at Call of Duty.
 
-![IMG-5594](https://user-images.githubusercontent.com/123502998/236361683-aad8e589-595a-4056-83d7-95d3169fc97d.jpg)
-
+![IMG-5593](https://user-images.githubusercontent.com/123502998/236361637-aad01b92-50c1-411d-a450-f99887188a6d.jpg)
 
 ## Key Features
 The player will be able to import an image that is the target that they want to shoot. This allows the player to have more fun with the game, and potentially more motivation to hit their target. 
