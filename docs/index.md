@@ -18,7 +18,7 @@ Matthew Gazin is from Switzerland, where he often skiis steep mountains and enjo
 
 Owen Williams is from Long Island and loves to sail and take drives in his big orange truck.
 
-The three group members (shown below) spent their entire sophmore and junior years of highschool stuck in qurantine. With nothing else to do they did what every other teenager at that age was doing: play video games all day. However there was one issue, they were all terrible players. Here is what they created to train, so that they could beat their friends at Call of Duty.
+The three friends (shown below) spent their entire sophmore and junior years of highschool stuck in qurantine. With nothing else to do they did what every other teenager at that age was doing: play video games all day. However there was one issue, they were all terrible players. Here is what they created to train, so that they could beat their friends at Call of Duty.
 
 ![IMG-5593](https://user-images.githubusercontent.com/123502998/236361637-aad01b92-50c1-411d-a450-f99887188a6d.jpg)
 
@@ -28,7 +28,7 @@ The player will be able to import an image that is the target that they want to 
 Another key feature of ours is the user's ability to choose difficulty. We have three difficulty modes: Easy, Medium and Hard. 
 ![image](https://user-images.githubusercontent.com/123502998/236355381-a62e3c2e-513e-4a79-ae71-338ff6d99758.png)
 
-The higher level that is chosen will result in smaller targets. Those who are up for the challenge can choose hard mode which has targets that are only .25 inch in diamater. The different target sizes are displayed below from easy to hard:
+The higher level that is chosen will result in smaller targets. Those who are up for the challenge can choose hard mode which has targets that are only 20x20 pixels. The different target sizes are displayed below from easy to hard:
 ![image](https://user-images.githubusercontent.com/123502998/236355623-ec4ddd0f-0c26-445b-bfb0-de563619ccd1.png)
 ![image](https://user-images.githubusercontent.com/123502998/236355596-2eb2ba20-8342-404c-b6b3-8276706b7d97.png)
 ![image](https://user-images.githubusercontent.com/123502998/236356008-5d8749ba-b5d6-45d9-869a-4e4463d5428a.png)
