@@ -54,13 +54,14 @@ class AimTrainerController:
                 continue
 
             if event.type == pygame.MOUSEMOTION:
-                self.game_range.MOUSE_X = event.pos[0]
-                self.game_range.MOUSE_Y = event.pos[1]
+                self.game_range.mouse_x = event.pos[0]
+                self.game_range.mouse_y = event.pos[1]
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if game_state == "start":
                      #print("start")
                     self.choose_difficulty()
                 elif game_state == "range":
+                    print("Clicked")
                     self.game_range.check_target_hit()
                 elif game_state == "end":
                     return True
@@ -108,8 +109,8 @@ class AimTrainerController:
         """
         Saves mouse position when mouse is clicked
         """
-        self.game_range.MOU = pygame.mouse.get_pos()[0]
-        self.game_range.MOUSE_Y = pygame.mouse.get_pos()[1]
+        self.game_range.mouse_x = pygame.mouse.get_pos()[0]
+        self.game_range.mouse_y = pygame.mouse.get_pos()[1]
 
     def exit_program(self):
         """

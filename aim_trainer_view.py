@@ -1,11 +1,9 @@
 """
 View for Aim Trainer
 """
-import pygame
-from pygame.locals import *
-import pygame_gui
-
 from typing import TYPE_CHECKING
+import pygame
+import pygame_gui
 
 if TYPE_CHECKING:
     from aim_trainer_range import AimTrainerRange
@@ -34,7 +32,7 @@ class AimTrainerView:
         """
 
         # pygame.init()
-        print("Initialized PYGAME")
+        # print("Initialized PYGAME")
         self.manager = pygame_gui.UIManager(
             (status.WINDOW_WIDTH, status.WINDOW_HEIGHT)
         )
@@ -45,13 +43,13 @@ class AimTrainerView:
         self.file_picker = pygame_gui.windows.UIFileDialog(
             rect=rect,
             manager=self.manager,
-            window_title="Selecto victimo",
+            window_title="Selecto victim",
         )
         status.manager = self.manager
         status.file_picker = self.file_picker
         self.game_clock = pygame.time.Clock()
 
-        self.FONT = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.SysFont(None, 48)
 
         self.start_bg_raw = pygame.image.load("range-start.png")
         self.end_bg_raw = pygame.image.load("range-end.png")
@@ -84,7 +82,7 @@ class AimTrainerView:
         Displays text on screen
         """
         if font is None:
-            font = self.FONT
+            font = self.font
         if color is None:
             color = self._status.COLORS["BLACK"]
         # Load text
@@ -130,6 +128,9 @@ class AimTrainerView:
         pygame.display.update()
 
     def display_picker(self):
+        """
+        Display file input dialog
+        """
         self._status.window_surface.blit(self._end_bg, (0, 0))
         self.manager.draw_ui(self._status.window_surface)
         pygame.display.update()
@@ -194,7 +195,7 @@ class AimTrainerView:
                 self._status.window_surface,
                 83,
                 485,
-                self.FONT,
+                self.font,
                 self._status.COLORS["BLACK"],
             )
             self.draw_text(
@@ -202,7 +203,7 @@ class AimTrainerView:
                 self._status.window_surface,
                 312,
                 485,
-                self.FONT,
+                self.font,
                 self._status.COLORS["BLACK"],
             )
             self.draw_text(
@@ -210,6 +211,6 @@ class AimTrainerView:
                 self._status.window_surface,
                 580,
                 485,
-                self.FONT,
+                self.font,
                 self._status.COLORS["BLACK"],
             )

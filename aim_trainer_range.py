@@ -1,8 +1,11 @@
 """
 Module for Aim Trainer
 """
+import sys
 import random
 import pygame
+from pygame.locals import *
+
 
 class AimTrainerRange:
     """
@@ -15,7 +18,6 @@ class AimTrainerRange:
         WINDOW_WIDTH: a int representing the amount of pixels wanted for width
         window_surface: a function that displays a window with given height and
         width
-        main_clock: an object that helps track time
         _config: a list containing ints that determine game difficulty settings
         _tick_counter: a int of the time gone by in milliseconds
         _targets: a list containing cords for upcoming target spawn
@@ -65,15 +67,17 @@ class AimTrainerRange:
         self._total_shots = 0
         self._target_image = None
         # Mouse position
-        self.mouse_x = round(self.WINDOW_HEIGHT / 2)
-        self.mouse_y = round(self.WINDOW_WIDTH / 2)
-        self.MOUSE_Y = round(self.WINDOW_HEIGHT / 2)
-        self.MOUSE_X = round(self.WINDOW_WIDTH / 2)
+        self.mouse_y = round(self.WINDOW_HEIGHT / 2)
+        self.mouse_x = round(self.WINDOW_WIDTH / 2)
         self.file_picker = None
         self.manager = None
 
     @property
     def target_image(self):
+        """
+        Returns publicly accessible version of image of target
+        Return: image of target
+        """
         return self._target_image
 
     def config(self):
@@ -170,8 +174,8 @@ class AimTrainerRange:
 
     def check_valid_target(self, target_cords):
         """
-        Check to see if target is in bound if is remove target from list and if
-        not add to target counter
+        Check to see if target is in bound if is remove target from list and
+        if not add to target counter
         """
         if target_cords.topleft[0] < 135 and target_cords.topleft[1] < 65:
             return False
@@ -184,13 +188,13 @@ class AimTrainerRange:
         score, and add to hit count
         """
         # Check to see if mouse position overlaps with targets
-        #print('check target function')
+        # print("check target function")
         for target in self._targets[:]:
-            #print(self.mouse_x)
-            #print(self.mouse_y)
-            #print(target.topleft[0],target.topleft[1])
-            #print(target.bottomright[0],target.bottomright[1])
-            #print('checking')
+            # print(self.mouse_x)
+            # print(self.mouse_y)
+            # print(target.topleft[0],target.topleft[1])
+            # print(target.bottomright[0],target.bottomright[1])
+            # print('checking')
             # if target hit play hit sound, remove target, and add to score
             if (
                 self.mouse_x > target.topleft[0]
@@ -199,7 +203,6 @@ class AimTrainerRange:
                 and self.mouse_y < target.bottomright[1]
             ):
                 # print('should remove target')
-                print("should remove target")
                 self._targets.remove(target)
                 # self._amount_targets -= 1
                 self._score += 1
@@ -208,8 +211,8 @@ class AimTrainerRange:
 
     def time_actions(self):
         """
-        Check time to see whether time is up or not. If times up, return False.
-        If not subtract time from clock and return True
+        Check time to see whether time is up or not. If times up, return
+        False. If not subtract time from clock and return True
 
         Returns:
             a boolean determining if the game should continue or not
