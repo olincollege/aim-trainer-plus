@@ -13,7 +13,7 @@ class AimTrainerView:
     """
     Prompts text and images for aim trainer
 
-    FONT: a method which sets text parameters
+    font: a method which sets text parameters
     start_bg_raw: a image
     end_bg_raw: a image
     range_bg_raw: a image
@@ -43,13 +43,13 @@ class AimTrainerView:
         self.file_picker = pygame_gui.windows.UIFileDialog(
             rect=rect,
             manager=self.manager,
-            window_title="Selecto victim",
+            window_title="Select Target",
         )
         status.manager = self.manager
         status.file_picker = self.file_picker
         self.game_clock = pygame.time.Clock()
 
-        self.font = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.Font("cs_regular.ttf", 48)
 
         self.start_bg_raw = pygame.image.load("range-start.png")
         self.end_bg_raw = pygame.image.load("range-end.png")
@@ -84,15 +84,30 @@ class AimTrainerView:
         if font is None:
             font = self.font
         if color is None:
-            color = self._status.COLORS["BLACK"]
+            color = self._status.COLORS["WHITE"]
         # Load text
         text_object = font.render(text, 1, color)
+        # Loaded text outline
+        text_object_outline = font.render(text, 1, self._status.COLORS["BLACK"])
+        
+        # Create a new surface for the final text with a stroke
+        text_stroke = pygame.Surface(
+            (text_object.get_width() + 4, text_object.get_height() + 4),
+            pygame.SRCALPHA,
+        )
+        # Blit the white text surface with a slight offset to create the stroke
+        # effect
+        text_stroke.blit(text_object_outline, (2, 2))
+        # Blit the black text surface onto the final text surface
+        text_stroke.blit(text_object, (0, 0))
+
         # get area of text
         text_rect = text_object.get_rect()
         # align text
         text_rect.topleft = (x_axis, y_axis)
+
         # display on surface
-        surface.blit(text_object, text_rect)
+        surface.blit(text_stroke, text_rect)
 
     def endgame_screen(self):
         """
@@ -105,25 +120,33 @@ class AimTrainerView:
             self._status.window_surface,
             200,
             325,
-            pygame.font.SysFont('cs_regular.ttf', 72, True),
+            pygame.font.Font("cs_regular.ttf", 72),
         )
         # Restart game prompt
         self.draw_text(
-            "Click anywhere to restart", self._status.window_surface, 100, 380,
-            None, self._status.COLORS["BLUE"]
+            "Click anywhere to restart",
+            self._status.window_surface,
+            100,
+            380,
+            None,
+            self._status.COLORS["WHITE"],
         )
         # Game stats prompt
         self.draw_text(
             "Accuracy: " + str(self._status.accuracy()) + "%",
             self._status.window_surface,
             269,
-            414, None, self._status.COLORS["BLUE"]
+            414,
+            None,
+            self._status.COLORS["WHITE"],
         )
         self.draw_text(
             "Score: " + str(self._status.score()),
             self._status.window_surface,
             308,
-            450, None, self._status.COLORS["BLUE"]
+            450,
+            None,
+            self._status.COLORS["WHITE"],
         )
         pygame.display.update()
 
@@ -188,7 +211,7 @@ class AimTrainerView:
                 self._status.window_surface,
                 90,
                 150,
-                pygame.font.SysFont("cs_regular.ttf", 112),
+                pygame.font.Font("cs_regular.ttf", 80),
             )
             self.draw_text(
                 "Easy",
@@ -196,7 +219,7 @@ class AimTrainerView:
                 83,
                 485,
                 self.font,
-                self._status.COLORS["BLACK"],
+                self._status.COLORS["WHITE"],
             )
             self.draw_text(
                 "Medium",
@@ -204,7 +227,7 @@ class AimTrainerView:
                 312,
                 485,
                 self.font,
-                self._status.COLORS["BLACK"],
+                self._status.COLORS["WHITE"],
             )
             self.draw_text(
                 "Hard",
@@ -212,5 +235,5 @@ class AimTrainerView:
                 580,
                 485,
                 self.font,
-                self._status.COLORS["BLACK"],
+                self._status.COLORS["WHITE"],
             )

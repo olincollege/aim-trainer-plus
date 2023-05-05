@@ -4,8 +4,6 @@ Module for Aim Trainer
 import sys
 import random
 import pygame
-from pygame.locals import *
-
 
 class AimTrainerRange:
     """

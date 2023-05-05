@@ -22,7 +22,7 @@ def main():
     clock = view.game_clock
     # Start screen
     start = False
-    while start == False:
+    while start is False:
         time_delta = clock.tick(60) / 1000.0
         controller.event_detect("start", time_delta)
         view.start_screen()
@@ -33,7 +33,7 @@ def main():
             start = True
 
     # range.set_target("target.png")
-    while range.target_image is None:
+    while module.target_image is None:
         time_delta = clock.tick(60) / 1000.0
         controller.event_detect("file", time_delta)
         view.display_picker()
@@ -48,7 +48,7 @@ def main():
         view.display_targets()
         controller.event_detect("range", time_delta)
         # range.check_target_hit()
-        start = range.time_actions()
+        start = module.time_actions()
         pygame.display.update()
 
     # end screen

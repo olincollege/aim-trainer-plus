@@ -1,7 +1,6 @@
 """
 Controller for Aim Trainer
 """
-import sys
 import pygame
 from pygame_gui import UI_BUTTON_PRESSED
 
@@ -61,7 +60,7 @@ class AimTrainerController:
                      #print("start")
                     self.choose_difficulty()
                 elif game_state == "range":
-                    print("Clicked")
+                    #print("Clicked")
                     self.game_range.check_target_hit()
                 elif game_state == "end":
                     return True
