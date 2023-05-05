@@ -12,18 +12,18 @@ Krish Bhatia resides in New Jersey, where he enjoys playing basketball, riding h
 
 ![20220812-205511](https://user-images.githubusercontent.com/123502998/236361661-f9f4a76b-9d0a-43d7-97f2-1436103537b1.jpg)
 
-Matthew Gazin is from Switzerland, where he often skiis steep mountains and enjoys the sun with his friends.
+Matthew Gazin is from Switzerland, where he often skiis steep mountains, enjoys the sun with his friends and eats good food.
 
 ![15de8279-290a-4e7f-89ca-0a7b5a37454c](https://user-images.githubusercontent.com/123502998/236358801-18232079-e909-4df3-8bad-96204d4866d2.jpg)
 
-Owen Williams is from Long Island and loves to sail and take drives in his big orange truck.
+Owen Himsworth is from Long Island and loves to sail and take drives in his big orange truck.
 
 The three friends (shown below) spent their entire sophmore and junior years of highschool stuck in qurantine. With nothing else to do they did what every other teenager at that age was doing: play video games all day. However there was one issue, they were all terrible players. Here is what they created to train, so that they could beat their friends at Call of Duty.
 
 ![IMG-5593](https://user-images.githubusercontent.com/123502998/236361637-aad01b92-50c1-411d-a450-f99887188a6d.jpg)
 
 ## Key Features
-The player will be able to import an image that is the target that they want to shoot. This allows the player to have more fun with the game, and potentially more motivation to hit their target. 
+The player is able to import an image that is the target that they want to shoot. This allows the player to have more fun with the game, and potentially more motivation to hit their target. 
 
 Another key feature of ours is the user's ability to choose difficulty. We have three difficulty modes: Easy, Medium and Hard. 
 ![image](https://user-images.githubusercontent.com/123502998/236355381-a62e3c2e-513e-4a79-ae71-338ff6d99758.png)
