@@ -21,4 +21,7 @@ Four images are provides to you to use.
 - trump.png
 - alien.png
 
-If you want to use your own image you have to add it to the root of repo. While it appears you can use any file on your device, the program will not allow this due to privacy settings. 
+If you want to use your own image you have to add it to the root of repo. While it appears you can use any file on your device, the program will not allow this due to privacy settings.
+
+## Notes
+Unit tests not added for controller.py and view.py as they could not be implemented reasonably

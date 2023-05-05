@@ -117,6 +117,7 @@ class AimTrainerRange:
         difficulty_rects.append(pygame.Rect(5, 450, 240, 100))
         difficulty_rects.append(pygame.Rect(255, 450, 240, 100))
         difficulty_rects.append(pygame.Rect(505, 450, 240, 100))
+        #print(difficulty_rects)
         return difficulty_rects
 
     def populate_config(self, difficulty):
