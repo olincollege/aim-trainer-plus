@@ -14,6 +14,9 @@ Screenshots or demos of your project
 Information about you (to the extent you are comfortable)
 Attribution for any external resources you used
 
+![image](https://user-images.githubusercontent.com/123502998/236355293-e1392bfa-26a3-45b0-b18d-43dbc5909cad.png)
+
+
 Visit our github: https://github.com/olincollege/aim-trainer-plus
 
 To play:
