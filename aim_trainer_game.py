@@ -34,13 +34,13 @@ def main():
             start = True
 
     # range.set_target("target.png")
-    while range.target_image == None:
+    while range.target_image is None:
         time_delta = clock.tick(60) / 1000.0
         controller.event_detect("file", time_delta)
         view.display_picker()
 
     # game
-    while start == True:
+    while start is True:
         time_delta = clock.tick(60) / 1000.0
         view.game_background()
         view.game_status()
@@ -54,7 +54,7 @@ def main():
 
     # end screen
     # print("end function")
-    while start == False:
+    while start is False:
         time_delta = clock.tick(60) / 1000.0
         # print("end screen")
         view.endgame_screen()

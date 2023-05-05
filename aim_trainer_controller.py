@@ -23,7 +23,8 @@ class AimTrainerController:
 
     def event_detect(self, game_state, time_delta):
         """
-        Loops through pygame events checking for a event activation and then depending on game state calls needed function.
+        Loops through pygame events checking for a event activation and then
+        depending on game state calls needed function.
 
         Args:
             game_state: a string stating what part of the game the programs in
@@ -52,13 +53,14 @@ class AimTrainerController:
                 continue
 
             if event.type == pygame.MOUSEMOTION:
-                self.game_range.MOUSE_X = event.pos[0]
-                self.game_range.MOUSE_Y = event.pos[1]
+                self.game_range.mouse_x = event.pos[0]
+                self.game_range.mouse_y = event.pos[1]
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if game_state == "start":
                     print("start")
                     self.choose_difficulty()
                 elif game_state == "range":
+                    print("Clicked")
                     self.game_range.check_target_hit()
                 elif game_state == "end":
                     return True
@@ -67,7 +69,8 @@ class AimTrainerController:
 
     def end_screen_check(self):
         """
-        Checks to see if user wants to start another game by clicking on the screen
+        Checks to see if user wants to start another game by clicking on the
+        screen
 
         Returns:
             a boolean dependent on choice
@@ -77,7 +80,8 @@ class AimTrainerController:
 
     def choose_difficulty(self):
         """
-        Takes player choice on difficulty by logging if player clicks on a position occupied by the difficulty text
+        Takes player choice on difficulty by logging if player clicks on a
+        position occupied by the difficulty text
 
         Returns:
             a string stating a difficulty
@@ -104,12 +108,13 @@ class AimTrainerController:
         """
         Saves mouse position when mouse is clicked
         """
-        self.game_range.MOUSE_X = pygame.mouse.get_pos()[0]
-        self.game_range.MOUSE_Y = pygame.mouse.get_pos()[1]
+        self.game_range.mouse_x = pygame.mouse.get_pos()[0]
+        self.game_range.mouse_y = pygame.mouse.get_pos()[1]
 
     def exit_program(self):
         """
-        Checks if player is trying to escape or close game window and then closes it
+        Checks if player is trying to escape or close game window and then
+        closes it
         """
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
