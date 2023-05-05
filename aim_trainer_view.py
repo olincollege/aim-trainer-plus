@@ -14,6 +14,7 @@ class AimTrainerView:
     Prompts text and images for aim trainer
 
     font: a method which sets text parameters
+    game_clock: a method which is used to track time
     start_bg_raw: a image
     end_bg_raw: a image
     range_bg_raw: a image
@@ -23,23 +24,32 @@ class AimTrainerView:
     _range_bg: a reformated image
     """
 
-    # pygame.init()
+    pygame.init()
 
-    def __init__(self, status: "AimTrainerRange"):
+    font = pygame.font.Font("cs_regular.ttf", 48)
+
+    game_clock = pygame.time.Clock()
+
+    #Import Backgrounds
+    start_bg_raw = pygame.image.load("range-start.png")
+    end_bg_raw = pygame.image.load("range-end.png")
+    range_bg_raw = pygame.image.load("range2.png")
+
+    def __init__(self, status):
         """
         Args:
             status: a instance of AimTrainerRange
         """
+        self._status = status
 
-        # pygame.init()
-        # print("Initialized PYGAME")
+        #File Search Code
         self.manager = pygame_gui.UIManager(
-            (status.WINDOW_WIDTH, status.WINDOW_HEIGHT)
+            (self._status.WINDOW_WIDTH, self._status.WINDOW_HEIGHT)
         )
         rect = pygame.Rect(
-            (0, 0), (status.WINDOW_WIDTH / 2, status.WINDOW_HEIGHT / 2)
+            (0, 0), (self._status.WINDOW_WIDTH / 2, self._status.WINDOW_HEIGHT / 2)
         )
-        rect.center = status.WINDOW_WIDTH / 2, status.WINDOW_HEIGHT / 2
+        rect.center = self._status.WINDOW_WIDTH / 2, self._status.WINDOW_HEIGHT / 2
         self.file_picker = pygame_gui.windows.UIFileDialog(
             rect=rect,
             manager=self.manager,
@@ -47,15 +57,8 @@ class AimTrainerView:
         )
         status.manager = self.manager
         status.file_picker = self.file_picker
-        self.game_clock = pygame.time.Clock()
 
-        self.font = pygame.font.Font("cs_regular.ttf", 48)
-
-        self.start_bg_raw = pygame.image.load("range-start.png")
-        self.end_bg_raw = pygame.image.load("range-end.png")
-        self.range_bg_raw = pygame.image.load("range2.png")
-
-        self._status = status
+        #Reformate Background images
         self._start_bg = pygame.transform.scale(
             self.start_bg_raw,
             (self._status.WINDOW_WIDTH, self._status.WINDOW_HEIGHT),
