@@ -37,14 +37,14 @@ Once you are finished with the game you will be able to see the score that you a
 
 ![image](https://user-images.githubusercontent.com/123502998/236356067-f9bd72c5-9612-4dbc-8816-a1cb870ab039.png)
 
-Information about you (to the extent you are comfortable)
-Attribution for any external resources you used
-
-Visit our github: 
-https://github.com/olincollege/aim-trainer-plus
-
 ## To play:
 - Install required packages and libraries: 'pip install -r requirements.txt'
 - Run 'python aim_trainer_game.py'
 
 We hope that you enjoy the game. Train hard so that you can get more Victory Royale's!
+
+Visit our github: 
+https://github.com/olincollege/aim-trainer-plus
+
+Attribution: 
+https://www.pygame.org
